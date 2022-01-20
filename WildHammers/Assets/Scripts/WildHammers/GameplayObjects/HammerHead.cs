@@ -14,7 +14,6 @@ namespace WildHammers
             [SerializeField] private float angularVelocityThreshold = 1800f;
             void OnCollisionEnter2D(Collision2D other)
             {
-                Debug.Log("Angular velocity is "+pommelRB.angularVelocity);
                 if (Mathf.Abs(pommelRB.angularVelocity) > angularVelocityThreshold)
                 {
                     if (other.transform.gameObject.CompareTag("GameBall"))
