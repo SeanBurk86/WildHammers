@@ -474,8 +474,8 @@ GameObject:
   - component: {fileID: 8897571824063845252}
   - component: {fileID: 8897571824063845253}
   - component: {fileID: 8897571824063845255}
-  - component: {fileID: 3481130412004760614}
   - component: {fileID: 1669385809600254663}
+  - component: {fileID: 3481130412004760614}
   m_Layer: 0
   m_Name: Head
   m_TagString: HammerHead
@@ -590,21 +590,6 @@ FixedJoint2D:
   m_ConnectedAnchor: {x: 0, y: 2.886598}
   m_DampingRatio: 1
   m_Frequency: 0
---- !u!114 &3481130412004760614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8897571824063845257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d928976d37bc4a4d8350bfea360bccb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: 7
-  pommelRB: {fileID: 8897571824063845253}
-  angularVelocityThreshold: 1800
 --- !u!61 &1669385809600254663
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -631,6 +616,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.37, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3481130412004760614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897571824063845257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d928976d37bc4a4d8350bfea360bccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 14
+  pommelRB: {fileID: 8897571824817047428}
+  angularVelocityThreshold: 800
 --- !u!1 &8897571824817047429
 GameObject:
   m_ObjectHideFlags: 0
