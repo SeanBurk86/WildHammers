@@ -15,6 +15,10 @@ namespace WildHammers
                 {
                     AudioController.instance.PlayAudio(AudioType.SFX_02);
                 }
+                else if (other.transform.gameObject.CompareTag("GameBall"))
+                {
+                    AudioController.instance.PlayAudio(AudioType.SFX_04);
+                }
             }
             
         }

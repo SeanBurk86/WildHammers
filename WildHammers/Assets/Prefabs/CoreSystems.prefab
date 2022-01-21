@@ -60,6 +60,8 @@ MonoBehaviour:
     - type: 3
       clip: {fileID: 8300000, guid: fa05e44eab463404d93af8ac1df507d8, type: 3}
     - type: 4
+      clip: {fileID: 8300000, guid: 6a527c43481991147a72b7e27d727502, type: 3}
+    - type: 5
       clip: {fileID: 8300000, guid: 52f86fd79292a1748bb2c04d1e80874f, type: 3}
   - source: {fileID: 1749488848493448308}
     audio:
