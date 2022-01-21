@@ -12,6 +12,7 @@ TagManager:
   - JoinMenu
   - PlayerTeamSelectorUI
   - PlayerHammer
+  - Pommel
   layers:
   - Default
   - TransparentFX

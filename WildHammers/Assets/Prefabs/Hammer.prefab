@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 5647271399104565430}
   m_Layer: 9
   m_Name: Pommel
-  m_TagString: Untagged
+  m_TagString: Pommel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
