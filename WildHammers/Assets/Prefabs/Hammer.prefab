@@ -412,13 +412,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8897571823517923084}
   - component: {fileID: 8739777951478226952}
+  - component: {fileID: 5351977251680634194}
   m_Layer: 0
   m_Name: Hammer
   m_TagString: PlayerHammer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8897571823517923084
 Transform:
   m_ObjectHideFlags: 0
@@ -462,6 +463,28 @@ MonoBehaviour:
   m_FullHammer: {fileID: 3474238455964080507}
   m_FullHammerOffset: {x: 0, y: 0, z: 0}
   m_InitialRotation: {x: 0, y: 0, z: 0}
+  m_KOTime: 1.5
+  m_HammmerAnimator: {fileID: 5351977251680634194}
+--- !u!95 &5351977251680634194
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897571823517923086}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9b696f169ddaf54d8adf72aec3a2d7b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8897571824063845257
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,6 +666,7 @@ GameObject:
   - component: {fileID: 8897571824817047426}
   - component: {fileID: 8897571824817047428}
   - component: {fileID: 5647271399104565430}
+  - component: {fileID: 4110955475911240476}
   m_Layer: 9
   m_Name: Pommel
   m_TagString: Pommel
@@ -751,6 +775,20 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.04}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.55
+--- !u!114 &4110955475911240476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897571824817047429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128b3c45011fd24499314ca26e9d7604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 1
+  m_KOForce: 15
