@@ -1,11 +1,13 @@
 
 using TMPro;
+using UnityCore.Audio;
 using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using WildHammers.GameplayObjects;
 using WildHammers.Player;
+using AudioType = UnityCore.Audio.AudioType;
 
 namespace WildHammers
 {
@@ -59,6 +61,7 @@ namespace WildHammers
                 if ((westScore >= winningScore || eastScore >= winningScore) && !GameRoundController.instance.isRoundOver)
                 {
                     GameRoundController.instance.isRoundOver = true;
+                    AudioController.instance.PlayAudio(AudioType.SFX_05);
                     PageController.instance.TurnPageOn(PageType.Victory);
                     SelectIntoVictoryPanel();
                 }
@@ -70,7 +73,6 @@ namespace WildHammers
 
             private void Configure()
             {
-                Log("Calling configure");
                 instance = this;
                 eastScore = 0;
                 westScore = 0;
