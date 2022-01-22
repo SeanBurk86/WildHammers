@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityCore.Audio;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using WildHammers.Player;
+using AudioType = UnityCore.Audio.AudioType;
 
 namespace WildHammers
 {
@@ -107,6 +109,7 @@ namespace WildHammers
                         }
                     }
                 }
+                AudioController.instance.PlayAudio(AudioType.SFX_07);
             }
 
             private void Log(string _msg)
