@@ -1,12 +1,15 @@
 
+using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityCore.Audio;
 using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using WildHammers.Match;
 using WildHammers.Player;
+using AudioType = UnityCore.Audio.AudioType;
 
 
 namespace WildHammers
@@ -50,7 +53,12 @@ namespace WildHammers
                     SetHammerPositions();
                     ActivateHammers();
                 }
-                
+
+                private void Start()
+                {
+                    AudioController.instance.PlayAudio(AudioType.SFX_01);
+                }
+
 
                 private void OnDisable()
                 {
