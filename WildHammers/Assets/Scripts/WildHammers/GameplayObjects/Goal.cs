@@ -1,6 +1,8 @@
 
+using UnityCore.Audio;
 using UnityEngine;
 using WildHammers.Round;
+using AudioType = UnityCore.Audio.AudioType;
 
 namespace WildHammers
 {
@@ -20,6 +22,7 @@ namespace WildHammers
                     GameBallPool.instance.Return(_gameBall);
                     //Increment add points to team score
                     ScoreController.instance.IncrementScore(1,goalType);
+                    AudioController.instance.PlayAudio(AudioType.SFX_06);
                 }
             }
         }
