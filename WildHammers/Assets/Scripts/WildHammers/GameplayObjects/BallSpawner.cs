@@ -76,7 +76,7 @@ namespace WildHammers
                 _gameBall.transform.parent = transform;
                 Rigidbody2D _gameBallRB = _gameBall.gameObject.GetComponent<Rigidbody2D>();
                 _gameBallRB.AddForce(Vector2.up*m_SpawnPushForce,ForceMode2D.Impulse);
-                AudioController.instance.PlayAudio(AudioType.SFX_08);
+                AudioController.instance.PlayAudio(AudioType.SFX_07);
             }
             
         }

@@ -60,8 +60,10 @@ namespace WildHammers
 
                 if ((westScore >= winningScore || eastScore >= winningScore) && !GameRoundController.instance.isRoundOver)
                 {
+                    Log("Got to round is over part");
                     GameRoundController.instance.isRoundOver = true;
-                    AudioController.instance.PlayAudio(AudioType.SFX_05);
+                    AudioController.instance.PlayAudio(AudioType.SFX_04);
+                    AudioController.instance.PlayAudio(AudioType.ST_03);
                     PageController.instance.TurnPageOn(PageType.Victory);
                     SelectIntoVictoryPanel();
                 }
@@ -81,6 +83,7 @@ namespace WildHammers
             
             private void SelectIntoVictoryPanel()
             {
+                Log("Got to SelectIntoVictoryPanel function");
                 foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
                 {
                     _playerInput.SwitchCurrentActionMap("UI");

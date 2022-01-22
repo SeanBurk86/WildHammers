@@ -109,7 +109,7 @@ namespace WildHammers
                         }
                     }
                 }
-                AudioController.instance.PlayAudio(AudioType.SFX_07);
+                AudioController.instance.PlayAudio(AudioType.SFX_06);
             }
 
             private void Log(string _msg)

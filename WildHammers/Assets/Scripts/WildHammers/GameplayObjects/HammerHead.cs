@@ -23,7 +23,7 @@ namespace WildHammers
                         dir = -dir.normalized;
                         Rigidbody2D otherBody = other.gameObject.GetComponent<Rigidbody2D>();
                         otherBody.AddForce(dir*finalForce, ForceMode2D.Impulse);
-                        AudioController.instance.PlayAudio(AudioType.SFX_03);
+                        AudioController.instance.PlayAudio(AudioType.SFX_02);
                     }
                     else if (other.transform.gameObject.CompareTag("HammerHead"))
                     {

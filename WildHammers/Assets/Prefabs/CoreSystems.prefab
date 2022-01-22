@@ -186,27 +186,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 1
   tracks:
+  - source: {fileID: 1749488848493448308}
+    audio:
+    - type: 0
+      clip: {fileID: 8300000, guid: e150a640b812f144bb63c4d0d7f47d3c, type: 3}
+    - type: 1
+      clip: {fileID: 8300000, guid: ba81ec9b16ea23640a4e71267895e37c, type: 3}
+    - type: 2
+      clip: {fileID: 8300000, guid: 8853709874a94324c90c2b78c2d26caa, type: 3}
   - source: {fileID: 1749488848657428644}
     audio:
-    - type: 2
-      clip: {fileID: 8300000, guid: e7ca1741444864446bf5f000b2661d5a, type: 3}
     - type: 3
       clip: {fileID: 8300000, guid: fa05e44eab463404d93af8ac1df507d8, type: 3}
     - type: 5
       clip: {fileID: 8300000, guid: 52f86fd79292a1748bb2c04d1e80874f, type: 3}
-  - source: {fileID: 1749488848493448308}
-    audio:
-    - type: 0
-      clip: {fileID: 8300000, guid: e3611ca2b3e204d4da8f245b507599c1, type: 3}
-    - type: 1
-      clip: {fileID: 8300000, guid: e46484f4f517a264291d7cc24d2c1283, type: 3}
   - source: {fileID: 5860745988663230333}
     audio:
     - type: 4
       clip: {fileID: 8300000, guid: 6a527c43481991147a72b7e27d727502, type: 3}
   - source: {fileID: 4988911892468613245}
     audio:
-    - type: 2
+    - type: 10
       clip: {fileID: 8300000, guid: e7ca1741444864446bf5f000b2661d5a, type: 3}
     - type: 6
       clip: {fileID: 8300000, guid: 6bb787e903a7eb041869b92e947810ef, type: 3}
@@ -216,13 +216,13 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: 076d666cb352a414ca87c0da47f62e84, type: 3}
     - type: 8
       clip: {fileID: 8300000, guid: 77d801e38aa1d11479193781a68c5c6b, type: 3}
-  - source: {fileID: 8286331510111065732}
+  - source: {fileID: 6743484217087412524}
     audio:
     - type: 9
       clip: {fileID: 8300000, guid: 30e26a49360b07a43871b8eb95b3691e, type: 3}
   - source: {fileID: 5485037797946838954}
     audio:
-    - type: 10
+    - type: 11
       clip: {fileID: 8300000, guid: 9b9bff31f725d09418f5bdaa040bd3e6, type: 3}
 --- !u!114 &1749488848270389101
 MonoBehaviour:
@@ -429,9 +429,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 8796248879533214810, guid: a88b3ff6e79d27542913723dfd84f3f3, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.772
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

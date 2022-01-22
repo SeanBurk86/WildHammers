@@ -22,7 +22,7 @@ namespace WildHammers
                     GameBallPool.instance.Return(_gameBall);
                     //Increment add points to team score
                     ScoreController.instance.IncrementScore(1,goalType);
-                    AudioController.instance.PlayAudio(AudioType.SFX_06);
+                    AudioController.instance.PlayAudio(AudioType.SFX_05);
                 }
             }
         }

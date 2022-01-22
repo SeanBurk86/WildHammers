@@ -7,6 +7,7 @@ namespace UnityCore
         {
             ST_01,
             ST_02,
+            ST_03,
             SFX_01,
             SFX_02,
             SFX_03,

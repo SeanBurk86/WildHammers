@@ -1,7 +1,10 @@
 
+using System;
+using UnityCore.Audio;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using AudioType = UnityCore.Audio.AudioType;
 
 namespace WildHammers
 {
@@ -18,6 +21,12 @@ namespace WildHammers
             private void Awake()
             {
                 isInitialInputReceived = false;
+            }
+
+            private void Start()
+            {
+                AudioController.instance.PlayAudio(AudioType.SFX_08);
+                AudioController.instance.PlayAudio(AudioType.ST_01,1f,0.5f);
             }
 
 
