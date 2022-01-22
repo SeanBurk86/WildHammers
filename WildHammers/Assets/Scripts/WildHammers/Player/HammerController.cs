@@ -1,6 +1,8 @@
 
 using TMPro;
+using UnityCore.Audio;
 using UnityEngine;
+using AudioType = UnityCore.Audio.AudioType;
 
 namespace WildHammers
 {
@@ -122,6 +124,7 @@ namespace WildHammers
                         m_KOTimer = m_KOTime;
                         //Set anim to isKOed to true;
                         m_HammmerAnimator.SetBool("isKOed", true);
+                        AudioController.instance.PlayAudio(AudioType.SFX_09);
                     }
                 }
             
