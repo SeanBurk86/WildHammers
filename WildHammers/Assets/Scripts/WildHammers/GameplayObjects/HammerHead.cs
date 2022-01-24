@@ -29,7 +29,7 @@ namespace WildHammers
                     {
                         Vector2 dir = other.contacts[0].point - new Vector2(transform.position.x, transform.position.y);
                         float finalForce = Mathf.Abs(force * (pommelRB.angularVelocity)) * 2f;
-                        dir = -dir.normalized;
+                        dir = dir.normalized;
                         Rigidbody2D otherBody = other.gameObject.GetComponent<Rigidbody2D>();
                         otherBody.AddForce(dir*finalForce, ForceMode2D.Impulse);
                     }
