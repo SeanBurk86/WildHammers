@@ -7,7 +7,7 @@ namespace UnityCore
         {
             None,
             Loading,
-            Menu,
+            ScoreBoard,
             Victory,
             PlayerJoin,
             TeamSelect,

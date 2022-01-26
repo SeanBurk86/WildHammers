@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using WildHammers.GameplayObjects;
+using WildHammers.Match;
 using WildHammers.Player;
 using AudioType = UnityCore.Audio.AudioType;
 
@@ -57,16 +58,6 @@ namespace WildHammers
                 {
                     eastScore += _points;
                 }
-
-                if ((westScore >= winningScore || eastScore >= winningScore) && !GameRoundController.instance.isRoundOver)
-                {
-                    Log("Got to round is over part");
-                    GameRoundController.instance.isRoundOver = true;
-                    AudioController.instance.PlayAudio(AudioType.SFX_04);
-                    AudioController.instance.PlayAudio(AudioType.ST_03);
-                    PageController.instance.TurnPageOn(PageType.Victory);
-                    SelectIntoVictoryPanel();
-                }
             }
 
             #endregion
@@ -78,19 +69,10 @@ namespace WildHammers
                 instance = this;
                 eastScore = 0;
                 westScore = 0;
-                firstSelectedInVictoryMenu = PageController.instance.pages[1].transform.GetChild(2).gameObject;
+                m_WestScoreText = MatchController.instance.teamWestScoreBox;
+                m_EastScoreText = MatchController.instance.teamEastScoreBox;
             }
             
-            private void SelectIntoVictoryPanel()
-            {
-                Log("Got to SelectIntoVictoryPanel function");
-                foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
-                {
-                    _playerInput.SwitchCurrentActionMap("UI");
-                    MultiplayerEventSystem _eventSystem = _playerInput.transform.GetComponent<MultiplayerEventSystem>();
-                    _eventSystem.SetSelectedGameObject(firstSelectedInVictoryMenu);
-                }
-            }
 
             private void Log(string _msg)
             {

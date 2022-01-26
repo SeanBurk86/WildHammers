@@ -4,6 +4,7 @@ using UnityCore.Menu;
 using UnityCore.Scene;
 using UnityEngine;
 using UnityEngine.UI;
+using WildHammers.Round;
 using WildHammers.Team;
 
 namespace WildHammers
@@ -16,11 +17,15 @@ namespace WildHammers
 
             private TeamController.MatchTeam teamWest, teamEast;
 
-            public TMP_Text player1WestText, player2WestText, player1EastText, player2EastText;
+            public TMP_Text player1WestText, player2WestText, player1EastText, player2EastText, 
+                teamWestScoreBox, teamEastScoreBox, roundTimer;
 
             public Image teamWestPanel, teamEastPanel;
 
             public bool hasMatchStarted;
+
+            [SerializeField] private TMP_Text m_WestTeamName, m_EastTeamName;
+            [SerializeField] private Image m_WestTeamBanner, m_EastTeamBanner;
 
             #region Unity Functions
 
@@ -74,6 +79,7 @@ namespace WildHammers
             {
                 PageController.instance.TurnOffAllPages();
                 SceneController.instance.Load(SceneType.MainGame, false, PageType.Loading);
+                ConfigureScoreBoard();
                 hasMatchStarted = true;
             }
             
@@ -105,6 +111,14 @@ namespace WildHammers
             private void AddTeamEastToMatch(TeamController.MatchTeam _matchTeam)
             {
                 teamEast = _matchTeam;
+            }
+
+            private void ConfigureScoreBoard()
+            {
+                m_WestTeamName.text = teamWest.teamInfo.city + " " + teamWest.teamInfo.name;
+                m_WestTeamBanner.sprite = teamWest.teamInfo.livery;
+                m_EastTeamName.text = teamEast.teamInfo.city + " " + teamEast.teamInfo.name;
+                m_EastTeamBanner.sprite = teamEast.teamInfo.livery;
             }
 
             #endregion

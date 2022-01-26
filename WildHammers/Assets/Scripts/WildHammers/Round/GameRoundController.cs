@@ -6,6 +6,7 @@ using UnityCore.Audio;
 using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 using WildHammers.Match;
 using WildHammers.Player;
@@ -23,11 +24,13 @@ namespace WildHammers
 
             public MatchInfo matchInfo;
 
+
             private List<PlayerInput> m_PlayerInputs;
+            private float m_RoundTimer;
+            private TMP_Text m_RoundTimerUI;
 
             [SerializeField] private Transform[] hammerStartingPositions;
-            [SerializeField] private TMP_Text m_WestTeamName, m_EastTeamName;
-            [SerializeField] private Image m_WestTeamBanner, m_EastTeamBanner;
+            [SerializeField] private GameObject firstSelectedInVictoryMenu;
 
             public bool isRoundOver;
 
@@ -39,19 +42,22 @@ namespace WildHammers
                     if (!instance)
                     {
                         instance = this;
-                        isRoundOver = false;
                     }
                     else
                     {
                         Destroy(gameObject);
                     }
 
+                    isRoundOver = false;
                     matchInfo = MatchController.instance.PackageMatchInfo();
                     m_PlayerInputs = PlayerJoinController.instance.playerList;
-                    ConfigureRound();
+                    m_RoundTimerUI = MatchController.instance.roundTimer;
+                    m_RoundTimer = matchInfo.roundTimeLength;
+                    firstSelectedInVictoryMenu = PageController.instance.pages[1].transform.GetChild(2).gameObject;
                     SwitchAllPlayersActionMaps();
                     SetHammerPositions();
                     ActivateHammers();
+                    PageController.instance.TurnPageOn(PageType.ScoreBoard);
                 }
 
                 private void Start()
@@ -59,6 +65,27 @@ namespace WildHammers
                     AudioController.instance.PlayAudio(AudioType.ST_02,0.5f);
                     AudioController.instance.PlayAudio(AudioType.SFX_08);
                 }
+
+                private void Update()
+                {
+                    if (!isRoundOver)
+                    {
+                        m_RoundTimer -= Time.deltaTime;
+                        m_RoundTimerUI.text = ((int) m_RoundTimer).ToString();
+                    }
+                    if (m_RoundTimer <= 0 && isRoundOver == false)
+                    {
+                        EndRound();
+                    } 
+                    else if ((ScoreController.instance.westScore >= matchInfo.winningScore 
+                                || ScoreController.instance.eastScore >= matchInfo.winningScore) 
+                               && !isRoundOver)
+                    {
+                        EndRound();
+                    }
+                }
+
+                
 
 
                 private void OnDisable()
@@ -71,15 +98,7 @@ namespace WildHammers
 
             #region Private Functions
 
-                private void ConfigureRound()
-                {
-                    m_WestTeamName.text = matchInfo.teamWest.teamInfo.city + " " + matchInfo.teamWest.teamInfo.name;
-                    m_WestTeamBanner.sprite = matchInfo.teamWest.teamInfo.livery;
-                    m_EastTeamName.text = matchInfo.teamEast.teamInfo.city + " " + matchInfo.teamEast.teamInfo.name;
-                    m_EastTeamBanner.sprite = matchInfo.teamEast.teamInfo.livery;
-                }
-
-                private void SwitchAllPlayersActionMaps()
+            private void SwitchAllPlayersActionMaps()
                 {
                     foreach (PlayerInput _playerInput in m_PlayerInputs)
                     {
@@ -130,18 +149,37 @@ namespace WildHammers
                     PageController.instance.TurnOffAllPages();
                 }
                 
+                private void EndRound()
+                {
+                    isRoundOver = true;
+                    AudioController.instance.PlayAudio(AudioType.SFX_04);
+                    AudioController.instance.PlayAudio(AudioType.ST_03);
+                    PageController.instance.TurnPageOn(PageType.Victory);
+                    SelectIntoVictoryPanel();
+                }
+                
+                private void SelectIntoVictoryPanel()
+                {
+                    foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
+                    {
+                        _playerInput.SwitchCurrentActionMap("UI");
+                        MultiplayerEventSystem _eventSystem = _playerInput.transform.GetComponent<MultiplayerEventSystem>();
+                        _eventSystem.SetSelectedGameObject(firstSelectedInVictoryMenu);
+                    }
+                }
+                
                 private void Log(string _msg)
                 {
                     Debug.Log("[GameRoundController]: "+_msg);
                 }
-                    
+
                 private void LogWarning(string _msg)
                 {
-                    Debug.LogWarning("[GameRoundController]: "+_msg);
+                    Debug.LogWarning("[GameRoundController]: " + _msg);
                 }
-                
 
-            #endregion
+
+                #endregion
         }
     }
 }
