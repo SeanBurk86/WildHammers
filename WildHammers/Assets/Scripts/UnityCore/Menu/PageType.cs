@@ -11,7 +11,9 @@ namespace UnityCore
             Victory,
             PlayerJoin,
             TeamSelect,
-            StartMenu
+            TeamSelectRosterPanel,
+            StartMenu,
+            MatchSettings
         }
     }
 }

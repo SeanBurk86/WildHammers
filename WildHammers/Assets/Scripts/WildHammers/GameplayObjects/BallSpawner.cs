@@ -3,6 +3,7 @@ using System.Collections;
 using UnityCore.Audio;
 using UnityEngine;
 using WildHammers.GameplayObjects;
+using WildHammers.Round;
 using AudioType = UnityCore.Audio.AudioType;
 
 namespace WildHammers
@@ -31,7 +32,15 @@ namespace WildHammers
                 {
                     Destroy(gameObject);
                 }
+
                 
+            }
+
+            private void Start()
+            {
+                m_RequiredNumberOfBalls = GameRoundController.instance.matchInfo.numberOfBalls;
+                
+                Debug.Log("ReqnumBalls: "+m_RequiredNumberOfBalls);
             }
 
             private void Update()

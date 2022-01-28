@@ -3,9 +3,12 @@ using TMPro;
 using UnityCore.Menu;
 using UnityCore.Scene;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
-using WildHammers.Round;
+using WildHammers.Player;
 using WildHammers.Team;
+using WildHammers.UI;
 
 namespace WildHammers
 {
@@ -13,7 +16,11 @@ namespace WildHammers
     {
         public class MatchController : MonoBehaviour
         {
+            public bool debug;
+            
             public static MatchController instance;
+
+            private MatchInfo m_MatchInfo;
 
             private TeamController.MatchTeam teamWest, teamEast;
 
@@ -22,10 +29,12 @@ namespace WildHammers
 
             public Image teamWestPanel, teamEastPanel;
 
-            public bool hasMatchStarted;
+            public bool hasMatchStarted = false, areTeamsPicked = false, areSettingsSet = false;
 
             [SerializeField] private TMP_Text m_WestTeamName, m_EastTeamName;
             [SerializeField] private Image m_WestTeamBanner, m_EastTeamBanner;
+            [SerializeField] private GameObject matchSettingsInitButton;
+            [SerializeField] private MatchSettingsPanel m_MatchSettingsPanel;
 
             #region Unity Functions
 
@@ -55,7 +64,21 @@ namespace WildHammers
                     teamEastPanel.sprite = teamEast.teamInfo.livery;
                 }
 
-                if (teamWest != null && teamEast != null && !hasMatchStarted)
+                Log("areTeamsPicked: "+areTeamsPicked
+                                      +"\nareSettingsSet: "+areSettingsSet
+                                      +"\nhasMatchStarted: "+hasMatchStarted);
+                if (teamWest != null && teamEast != null 
+                                     && !areTeamsPicked && !PageController.instance.PageIsOn(PageType.MatchSettings))
+                {
+                    areTeamsPicked = true;
+                    PageController.instance.TurnPageOff(PageType.TeamSelect, PageType.MatchSettings);
+                    SelectIntoMatchSettingsPanel();
+                } 
+                else if (!areSettingsSet)
+                {
+                    SetMatchInfo();
+                } 
+                else if (areTeamsPicked && areSettingsSet && !hasMatchStarted)
                 {
                     StartMatch();
                 }
@@ -82,10 +105,10 @@ namespace WildHammers
                 ConfigureScoreBoard();
                 hasMatchStarted = true;
             }
-            
+
             public MatchInfo PackageMatchInfo()
             {
-                return new MatchInfo(teamWest, teamEast);
+                return m_MatchInfo;
             }
             
             #endregion
@@ -119,6 +142,31 @@ namespace WildHammers
                 m_WestTeamBanner.sprite = teamWest.teamInfo.livery;
                 m_EastTeamName.text = teamEast.teamInfo.city + " " + teamEast.teamInfo.name;
                 m_EastTeamBanner.sprite = teamEast.teamInfo.livery;
+            }
+            
+            private void SelectIntoMatchSettingsPanel()
+            {
+                foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
+                {
+                    _playerInput.SwitchCurrentActionMap("UI");
+                    MultiplayerEventSystem _eventSystem = _playerInput.transform.GetComponent<MultiplayerEventSystem>();
+                    _eventSystem.SetSelectedGameObject(matchSettingsInitButton);
+                }
+            }
+
+            private void SetMatchInfo()
+            {
+                m_MatchInfo = new MatchInfo(teamWest, teamEast,
+                    m_MatchSettingsPanel.matchSettings.numberOfBalls, m_MatchSettingsPanel.matchSettings.winningScore,
+                    m_MatchSettingsPanel.matchSettings.roundTimeLength);
+                areSettingsSet = true;
+                Log("areSettingsSet: "+areSettingsSet);
+            }
+
+            private void Log(string _msg)
+            {
+                if(debug)
+                    Debug.Log("[MatchController]: "+_msg);
             }
 
             #endregion

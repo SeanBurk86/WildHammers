@@ -53,6 +53,7 @@ namespace WildHammers
                     m_PlayerInputs = PlayerJoinController.instance.playerList;
                     m_RoundTimerUI = MatchController.instance.roundTimer;
                     m_RoundTimer = matchInfo.roundTimeLength;
+                    
                     firstSelectedInVictoryMenu = PageController.instance.pages[1].transform.GetChild(2).gameObject;
                     SwitchAllPlayersActionMaps();
                     SetHammerPositions();

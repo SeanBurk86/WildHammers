@@ -39,9 +39,10 @@ namespace WildHammers
 
             private void Update()
             {
-                if (readyCount >= PlayerInputManager.instance.maxPlayerCount && !MatchController.instance.hasMatchStarted)
+                if (readyCount >= PlayerInputManager.instance.maxPlayerCount && !MatchController.instance.areTeamsPicked)
                 {
                     PageController.instance.TurnPageOff(PageType.PlayerJoin,PageType.TeamSelect);
+                    PageController.instance.TurnPageOn(PageType.TeamSelectRosterPanel);
                 }
             }
 
