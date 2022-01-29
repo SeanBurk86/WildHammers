@@ -74,7 +74,7 @@ namespace WildHammers
                     PageController.instance.TurnPageOff(PageType.TeamSelect, PageType.MatchSettings);
                     SelectIntoMatchSettingsPanel();
                 } 
-                else if (!areSettingsSet)
+                else if (areTeamsPicked && !areSettingsSet)
                 {
                     SetMatchInfo();
                 } 
