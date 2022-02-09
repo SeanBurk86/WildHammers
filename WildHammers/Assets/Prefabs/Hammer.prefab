@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce1a441b36e7924c80cceed13fc6352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amount: 20000000
+  amount: 18000000
   hammerThrust: 300
   headTMPText: {fileID: 1652132550950401770}
   InputHandler: {fileID: 0}

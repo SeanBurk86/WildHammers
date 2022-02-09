@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityCore.Menu;
 using UnityEngine;
@@ -12,9 +13,13 @@ namespace WildHammers
     {
         public class PlayerJoinController : MonoBehaviour
         {
+            public bool debug;
+            
             public static PlayerJoinController instance;
             
             public List<PlayerInput> playerList = new List<PlayerInput>();
+
+            public bool areAllPlayersEntered;
             [SerializeField] private InputAction joinAction, leaveAction;
 
             public event System.Action<PlayerInput> PlayerJoinedGame;
@@ -34,15 +39,26 @@ namespace WildHammers
                 {
                     Destroy(gameObject);
                 }
-                
+
+                areAllPlayersEntered = false;
             }
 
             private void Update()
             {
-                if (readyCount >= PlayerInputManager.instance.maxPlayerCount && !MatchController.instance.areTeamsPicked)
+                if (!MatchController.instance.hasMatchStarted)
                 {
-                    PageController.instance.TurnPageOff(PageType.PlayerJoin,PageType.TeamSelect);
-                    PageController.instance.TurnPageOn(PageType.TeamSelectRosterPanel);
+                    if (readyCount >= PlayerInputManager.instance.maxPlayerCount)
+                    {
+                        areAllPlayersEntered = true;
+                        PageController.instance.TurnPageOff(PageType.PlayerJoin);
+                        PageController.instance.TurnPageOn(PageType.TeamSelectRosterPanel);
+                    } 
+                    else if (!PageController.instance.PageIsOn(PageType.PlayerJoin) 
+                             && !PageController.instance.PageIsOn(PageType.StartMenu)
+                             && !PageController.instance.PageIsOn(PageType.ConfigSettings))
+                    {
+                        PageController.instance.TurnPageOn(PageType.PlayerJoin);
+                    }
                 }
             }
 
@@ -59,7 +75,12 @@ namespace WildHammers
             {
                 readyCount -= 1; 
             }
-            
+
+            public void ResetJoinPanel()
+            {
+                readyCount = 0;
+                areAllPlayersEntered = false;
+            }
 
             #endregion
 
@@ -137,6 +158,12 @@ namespace WildHammers
                 }
         
                 Destroy(playerInput.transform.parent.gameObject);
+            }
+
+            private void Log(string _msg)
+            {
+                if(debug)
+                    Debug.Log("[PlayerJoinController]: " + _msg);
             }
 
             #endregion

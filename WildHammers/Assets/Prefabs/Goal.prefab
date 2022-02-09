@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   m_EjectionForce: 1500
-  m_GoalTendingClock: 3
+  m_GoalTendingClock: 1
 --- !u!61 &4420869524754318404
 BoxCollider2D:
   m_ObjectHideFlags: 0

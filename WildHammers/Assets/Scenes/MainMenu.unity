@@ -194,6 +194,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1265199637 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7540175559740587216, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
+  m_PrefabInstance: {fileID: 729614803731913165}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9737a14bcbd674f4ea19f99abae7f2f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1270155453 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 729614802484957552, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
@@ -300,17 +311,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1934802257 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1749488848270389101, guid: 6843b925b4217d647b206074f046920b, type: 3}
-  m_PrefabInstance: {fileID: 1749488849567568444}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1317b54bd333f047afb4bd7cb222796, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2105731493 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8672634690098709825, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
@@ -352,7 +352,15 @@ PrefabInstance:
     - target: {fileID: 729614802440255951, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1934802257}
+      objectReference: {fileID: 1265199637}
+    - target: {fileID: 729614802440255951, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartMatch
+      objectReference: {fileID: 0}
+    - target: {fileID: 729614802440255951, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WildHammers.UI.VictoryPanel, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 729614802448296873, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -668,6 +676,10 @@ PrefabInstance:
     - target: {fileID: 3524970310524321601, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960867859394988091, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
+      propertyPath: m_SortingOrder
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4632143169747105215, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
       propertyPath: m_AnchorMax.y

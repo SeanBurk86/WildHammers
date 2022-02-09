@@ -49,6 +49,7 @@ namespace UnityCore
                 }
 
                 Page _page = GetPage(_type);
+                Log("Turning on page "+_type);
                 _page.gameObject.SetActive(true);
                 _page.Animate(true);
             }

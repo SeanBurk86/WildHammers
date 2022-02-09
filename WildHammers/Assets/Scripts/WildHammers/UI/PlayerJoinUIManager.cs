@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -33,12 +34,16 @@ namespace WildHammers
                 private void Start()
                 {
                     PlayerJoinController.instance.PlayerJoinedGame += PlayerJoinedGame;
+                }
+
+                private void OnEnable()
+                {
                     foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
                     {
                         SetupJoinPlayerInputPanel(_playerInput);
                     }
                 }
-                
+
                 private void OnDisable()
                 {
                     PlayerJoinController.instance.PlayerJoinedGame -= PlayerJoinedGame;
@@ -52,7 +57,6 @@ namespace WildHammers
                 private void Configure()
                 {
                     instance = this;
-                    DontDestroyOnLoad(gameObject);
                 }
 
                 private void PlayerJoinedGame(PlayerInput _playerInput)
@@ -63,16 +67,30 @@ namespace WildHammers
                 private void SetupJoinPlayerInputPanel(PlayerInput _playerInput)
                 {
                     playerJoinMenu.transform.GetChild(_playerInput.playerIndex).gameObject.SetActive(false);
-                    Transform joinPlayerUI = _playerInput.transform.GetChild(0);
-                    joinPlayerUI.SetParent(playerJoinMenu.transform, false);
-                    if (_playerInput.playerIndex > 0)
+                    if (_playerInput.transform.GetComponentInChildren<JoinPanelUI>() != null)
                     {
-                        float _panelXOffest = _playerInput.playerIndex * .25f;
-                        joinPlayerUI.GetComponent<RectTransform>().anchorMin = new Vector2(_panelXOffest, 0);
-                        joinPlayerUI.GetComponent<RectTransform>().anchorMax = new Vector2(_panelXOffest + .25f, 1);
+                        Transform _joinPlayerUI = _playerInput.transform.GetChild(0);
+                        _joinPlayerUI.SetParent(playerJoinMenu.transform, false);
+                        if (_playerInput.playerIndex > 0)
+                        {
+                            float _panelXOffest = _playerInput.playerIndex * .25f;
+                            _joinPlayerUI.GetComponent<RectTransform>().anchorMin = new Vector2(_panelXOffest, 0);
+                            _joinPlayerUI.GetComponent<RectTransform>().anchorMax = new Vector2(_panelXOffest + .25f, 1);
+                        }
+                        _playerInput.transform.GetComponent<MultiplayerEventSystem>()
+                            .SetSelectedGameObject(_joinPlayerUI.GetComponent<JoinPanelUI>().firstSelectedInitialsButton); 
                     }
-                    _playerInput.transform.GetComponent<MultiplayerEventSystem>()
-                        .SetSelectedGameObject(joinPlayerUI.GetComponent<JoinPanelUI>().firstSelectedInitialsButton); 
+                    else
+                    {
+                        GameObject _joinPlayerUIGameObject = transform.GetChild(_playerInput.playerIndex + 4).gameObject;
+                        _joinPlayerUIGameObject.SetActive(true);
+                        JoinPanelUI _joinPanelUI = _joinPlayerUIGameObject.GetComponent<JoinPanelUI>();
+                        _joinPanelUI.playerNameInput = "";
+                        _joinPlayerUIGameObject.transform.GetChild(1).GetChild(2).gameObject.SetActive(false);
+                        _joinPlayerUIGameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+                        _playerInput.transform.GetComponent<MultiplayerEventSystem>()
+                            .SetSelectedGameObject(_joinPanelUI.firstSelectedInitialsButton);
+                    }
                 }
             
 

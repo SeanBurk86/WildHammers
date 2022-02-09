@@ -86,8 +86,6 @@ namespace WildHammers
                     }
                 }
 
-                
-
 
                 private void OnDisable()
                 {
@@ -156,19 +154,8 @@ namespace WildHammers
                     AudioController.instance.PlayAudio(AudioType.SFX_04);
                     AudioController.instance.PlayAudio(AudioType.ST_03);
                     PageController.instance.TurnPageOn(PageType.Victory);
-                    SelectIntoVictoryPanel();
                 }
-                
-                private void SelectIntoVictoryPanel()
-                {
-                    foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
-                    {
-                        _playerInput.SwitchCurrentActionMap("UI");
-                        MultiplayerEventSystem _eventSystem = _playerInput.transform.GetComponent<MultiplayerEventSystem>();
-                        _eventSystem.SetSelectedGameObject(firstSelectedInVictoryMenu);
-                    }
-                }
-                
+
                 private void Log(string _msg)
                 {
                     Debug.Log("[GameRoundController]: "+_msg);

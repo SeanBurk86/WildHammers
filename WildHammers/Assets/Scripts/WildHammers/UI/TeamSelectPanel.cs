@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,15 +19,25 @@ namespace WildHammers
             public GameObject buttonPanel;
             
 
-            private void Start()
+            private void OnEnable()
             {
                 teamList = TeamController.instance.teams;
                 playerList = PlayerJoinController.instance.playerList;
                 ConfigureButtons();
             }
-            
+
+            private void OnDisable()
+            {
+                foreach (Transform child in buttonPanel.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+
             private void ConfigureButtons()
             {
+                //Clear buttons that may still be around
+
                 int playerListIncrementer = 0;
                 foreach (var _teamInfo in teamList)
                 {

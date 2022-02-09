@@ -13,6 +13,15 @@ namespace WildHammers
             public int winningScore;
             public float roundTimeLength;
 
+            public MatchInfo()
+            {
+                this.teamWest = null;
+                this.teamEast = null;
+                this.numberOfBalls = 0;
+                this.winningScore = 0;
+                this.roundTimeLength = 0f;
+            }
+
             public MatchInfo(TeamController.MatchTeam _TeamWest, TeamController.MatchTeam _TeamEast)
             {
                 this.teamWest = _TeamWest;

@@ -34,7 +34,7 @@ namespace WildHammers
 
             #region Unity Functions
 
-                private void Awake()
+                private void OnEnable()
                 {
                     hasSubmittedInitials = false;
                     hasSubmittedZodiac = false;

@@ -20,7 +20,7 @@ namespace WildHammers
             
             public static MatchController instance;
 
-            private MatchInfo m_MatchInfo;
+            private MatchInfo m_MatchInfo = new MatchInfo();
 
             private TeamController.MatchTeam teamWest, teamEast;
 
@@ -29,11 +29,10 @@ namespace WildHammers
 
             public Image teamWestPanel, teamEastPanel;
 
-            public bool hasMatchStarted = false, areTeamsPicked = false, areSettingsSet = false;
+            public bool hasMatchStarted = false, areTeamsPicked = false, areSettingsSet = false, areSettingsAccepted = false;
 
             [SerializeField] private TMP_Text m_WestTeamName, m_EastTeamName;
             [SerializeField] private Image m_WestTeamBanner, m_EastTeamBanner;
-            [SerializeField] private GameObject matchSettingsInitButton;
             [SerializeField] private MatchSettingsPanel m_MatchSettingsPanel;
 
             #region Unity Functions
@@ -50,37 +49,45 @@ namespace WildHammers
 
             private void Update()
             {
-                if (teamWest != null)
+                if (!hasMatchStarted)
                 {
-                    player1WestText.text = teamWest.teamRoster[0].playerInitials+" the "+teamWest.teamRoster[0].zodiacSign;
-                    player2WestText.text = teamWest.teamRoster[1].playerInitials+" the "+teamWest.teamRoster[1].zodiacSign;
-                    teamWestPanel.sprite = teamWest.teamInfo.livery;
-                }
-                
-                if (teamEast != null)
-                {
-                    player1EastText.text = teamEast.teamRoster[0].playerInitials+" the "+teamEast.teamRoster[0].zodiacSign;
-                    player2EastText.text = teamEast.teamRoster[1].playerInitials+" the "+teamEast.teamRoster[1].zodiacSign;
-                    teamEastPanel.sprite = teamEast.teamInfo.livery;
-                }
+                    if (teamWest != null)
+                    {
+                        player1WestText.text = teamWest.teamRoster[0].playerInitials+" the "+teamWest.teamRoster[0].zodiacSign;
+                        player2WestText.text = teamWest.teamRoster[1].playerInitials+" the "+teamWest.teamRoster[1].zodiacSign;
+                        teamWestPanel.sprite = teamWest.teamInfo.livery;
+                    }
+                    
+                    if (teamEast != null)
+                    {
+                        player1EastText.text = teamEast.teamRoster[0].playerInitials+" the "+teamEast.teamRoster[0].zodiacSign;
+                        player2EastText.text = teamEast.teamRoster[1].playerInitials+" the "+teamEast.teamRoster[1].zodiacSign;
+                        teamEastPanel.sprite = teamEast.teamInfo.livery;
+                    }
 
-                Log("areTeamsPicked: "+areTeamsPicked
-                                      +"\nareSettingsSet: "+areSettingsSet
-                                      +"\nhasMatchStarted: "+hasMatchStarted);
-                if (teamWest != null && teamEast != null 
-                                     && !areTeamsPicked && !PageController.instance.PageIsOn(PageType.MatchSettings))
-                {
-                    areTeamsPicked = true;
-                    PageController.instance.TurnPageOff(PageType.TeamSelect, PageType.MatchSettings);
-                    SelectIntoMatchSettingsPanel();
-                } 
-                else if (areTeamsPicked && !areSettingsSet)
-                {
-                    SetMatchInfo();
-                } 
-                else if (areTeamsPicked && areSettingsSet && !hasMatchStarted)
-                {
-                    StartMatch();
+                    if (!areTeamsPicked && !PageController.instance.PageIsOn(PageType.TeamSelect)
+                                        && PlayerJoinController.instance.areAllPlayersEntered)
+                    {
+                        PageController.instance.TurnPageOn(PageType.TeamSelect);
+                    } 
+                    else if (teamWest != null && teamEast != null && !areTeamsPicked)
+                    {
+                        areTeamsPicked = true;
+                        PageController.instance.TurnPageOff(PageType.TeamSelect, PageType.MatchSettings);
+                    }
+                    else if (areTeamsPicked && !areSettingsSet && !areSettingsAccepted)
+                    {
+                        PageController.instance.TurnPageOn(PageType.MatchSettings);
+                    }
+                    else if (areTeamsPicked && !areSettingsSet && areSettingsAccepted)
+                    {
+                        SetMatchInfo();
+                    } 
+                    else if (areTeamsPicked && areSettingsSet)
+                    {
+                        StartMatch();
+                    }
+                    
                 }
             }
 
@@ -110,6 +117,18 @@ namespace WildHammers
             {
                 return m_MatchInfo;
             }
+
+            public void FlushMatchSettings()
+            {
+                m_MatchInfo = new MatchInfo(teamWest,teamEast);
+            }
+            
+            public void FlushTeamSettings()
+            {
+                teamWest = null;
+                teamEast = null;
+                m_MatchInfo = new MatchInfo();
+            }
             
             #endregion
 
@@ -118,12 +137,18 @@ namespace WildHammers
             private void Configure()
             {
                 instance = this;
+                m_MatchSettingsPanel.acceptSettingsEvent += AcceptSettings;
                 DontDestroyOnLoad(gameObject);
             }
 
             private void Dispose()
             {
-                
+                m_MatchSettingsPanel.acceptSettingsEvent -= AcceptSettings;
+            }
+
+            private void AcceptSettings()
+            {
+                areSettingsAccepted = true;
             }
 
             private void AddTeamWestToMatch(TeamController.MatchTeam _matchTeam)
@@ -144,15 +169,6 @@ namespace WildHammers
                 m_EastTeamBanner.sprite = teamEast.teamInfo.livery;
             }
             
-            private void SelectIntoMatchSettingsPanel()
-            {
-                foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
-                {
-                    _playerInput.SwitchCurrentActionMap("UI");
-                    MultiplayerEventSystem _eventSystem = _playerInput.transform.GetComponent<MultiplayerEventSystem>();
-                    _eventSystem.SetSelectedGameObject(matchSettingsInitButton);
-                }
-            }
 
             private void SetMatchInfo()
             {
@@ -160,7 +176,6 @@ namespace WildHammers
                     m_MatchSettingsPanel.matchSettings.numberOfBalls, m_MatchSettingsPanel.matchSettings.winningScore,
                     m_MatchSettingsPanel.matchSettings.roundTimeLength);
                 areSettingsSet = true;
-                Log("areSettingsSet: "+areSettingsSet);
             }
 
             private void Log(string _msg)

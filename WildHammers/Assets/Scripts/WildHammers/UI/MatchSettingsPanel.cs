@@ -10,9 +10,21 @@ namespace WildHammers
     {
         public class MatchSettingsPanel : MonoBehaviour
         {
+            public static MatchSettingsPanel instance = null;
+
+            public delegate void AcceptSettingsDelegate();
+
+            public event AcceptSettingsDelegate acceptSettingsEvent;
+            
             public MatchInfo matchSettings;
 
             [SerializeField] private TMP_Text m_NumberOfBallsInput, m_RoundTimeLimit, m_WinningScoreInput;
+
+            private void Awake()
+            {
+                if (!instance) instance = this;
+                else Destroy(this);
+            }
 
             public void AcceptSettings()
             {
@@ -20,6 +32,7 @@ namespace WildHammers
                     AcceptNumberOfBallsInPlay(m_NumberOfBallsInput.text),
                     AcceptWinningScore(m_WinningScoreInput.text),
                     AcceptRoundTimeLimit(m_RoundTimeLimit.text));
+                acceptSettingsEvent();
             }
 
             private float AcceptRoundTimeLimit(string _timeLimit)
@@ -35,6 +48,11 @@ namespace WildHammers
             private int AcceptWinningScore(string _winningScore)
             {
                 return Int32.Parse(_winningScore);
+            }
+
+            private void Log(string _msg)
+            {
+                Debug.Log("[MatchSettingPanel]: "+_msg);
             }
         }
         
