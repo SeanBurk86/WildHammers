@@ -14,8 +14,6 @@ namespace WildHammers
         {
             public static BallSparksSpawner instance = null;
             
-            
-            
             [SerializeField] private ParticleSystem m_BallSparks;
             private ObjectPool<ParticleSystem> m_ParticlePool;
 
@@ -33,13 +31,7 @@ namespace WildHammers
                     Destroy(this);
                 }
             }
-
-            private void ConfigurePool()
-            {
-                m_ParticlePool = new ObjectPool<ParticleSystem>(() => { return Instantiate(m_BallSparks); },
-                    _sparks => { _sparks.gameObject.SetActive(true); }, _sparks => { _sparks.gameObject.SetActive(false); },
-                    _sparks => { Destroy(_sparks.gameObject); }, false, 10, 20);
-            }
+            
 
             #endregion
 
@@ -50,6 +42,18 @@ namespace WildHammers
                 ParticleSystem _sparks =  m_ParticlePool.Get();
                 _sparks.transform.position = _pos;
             }
+
+            #endregion
+
+            #region Private Functions
+
+            private void ConfigurePool()
+            {
+                m_ParticlePool = new ObjectPool<ParticleSystem>(() => { return Instantiate(m_BallSparks); },
+                    _sparks => { _sparks.gameObject.SetActive(true); }, _sparks => { _sparks.gameObject.SetActive(false); },
+                    _sparks => { Destroy(_sparks.gameObject); }, false, 10, 20);
+            }
+            
 
             #endregion
 
