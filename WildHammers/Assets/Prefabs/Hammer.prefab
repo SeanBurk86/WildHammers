@@ -5265,9 +5265,9 @@ MonoBehaviour:
   amount: 18000000
   hammerThrust: 300
   headTMPText: {fileID: 1652132550950401770}
-  InputHandler: {fileID: 0}
-  RBBottom: {fileID: 8897571824817047428}
-  HammerRB: {fileID: 8897571824063845253}
+  m_InputHandler: {fileID: 0}
+  m_RBBottom: {fileID: 0}
+  m_HammerRB: {fileID: 0}
   m_HammerHead: {fileID: 8897571824063845257}
   m_HammerHeadOffset: {x: 0, y: 7, z: 0}
   m_Pommel: {fileID: 8897571824817047429}
