@@ -137,6 +137,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1749488848270389103}
+  - component: {fileID: 360757493838430621}
+  - component: {fileID: 7514136323069759786}
   - component: {fileID: 1749488848270389102}
   - component: {fileID: 1749488848270389101}
   - component: {fileID: 1749488848270389100}
@@ -172,6 +174,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &360757493838430621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749488848270389107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba8d7b99b23cce41b36562b6593dcf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7514136323069759786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749488848270389107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d3f1dadd898d24fa322e4bf3d5de91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGamePaused: 0
 --- !u!114 &1749488848270389102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,13 +314,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5807ff8354938764fbfbc84dfdcdaa4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   player1WestText: {fileID: 0}
   player2WestText: {fileID: 0}
   player1EastText: {fileID: 0}
   player2EastText: {fileID: 0}
+  teamWestScoreBox: {fileID: 0}
+  teamEastScoreBox: {fileID: 0}
+  roundTimer: {fileID: 0}
   teamWestPanel: {fileID: 0}
   teamEastPanel: {fileID: 0}
   hasMatchStarted: 0
+  areTeamsPicked: 0
+  areSettingsSet: 0
+  areSettingsAccepted: 0
+  m_WestTeamName: {fileID: 0}
+  m_EastTeamName: {fileID: 0}
+  m_WestTeamBanner: {fileID: 0}
+  m_EastTeamBanner: {fileID: 0}
+  m_MatchSettingsPanel: {fileID: 0}
 --- !u!114 &1749488848270389097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +345,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b067d44e6294a14a87356079ab45089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   playerList: []
+  areAllPlayersEntered: 0
   joinAction:
     m_Name: Join
     m_Type: 0

@@ -1,13 +1,11 @@
 
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityCore.Audio;
+using UnityCore.Game;
 using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
-using UnityEngine.UI;
 using WildHammers.Match;
 using WildHammers.Player;
 using AudioType = UnityCore.Audio.AudioType;
@@ -53,7 +51,7 @@ namespace WildHammers
                     m_PlayerInputs = PlayerJoinController.instance.playerList;
                     m_RoundTimerUI = MatchController.instance.roundTimer;
                     m_RoundTimer = matchInfo.roundTimeLength;
-                    
+
                     firstSelectedInVictoryMenu = PageController.instance.pages[1].transform.GetChild(2).gameObject;
                     SwitchAllPlayersActionMaps();
                     SetHammerPositions();
@@ -69,20 +67,24 @@ namespace WildHammers
 
                 private void Update()
                 {
-                    if (!isRoundOver)
+                    if (!GameController.instance.isGamePaused)
                     {
-                        m_RoundTimer -= Time.deltaTime;
-                        m_RoundTimerUI.text = ((int) m_RoundTimer).ToString();
-                    }
-                    if (m_RoundTimer <= 0 && isRoundOver == false)
-                    {
-                        EndRound();
-                    } 
-                    else if ((ScoreController.instance.westScore >= matchInfo.winningScore 
-                                || ScoreController.instance.eastScore >= matchInfo.winningScore) 
-                               && !isRoundOver)
-                    {
-                        EndRound();
+                        if (!isRoundOver)
+                        {
+                            m_RoundTimer -= Time.deltaTime;
+                            m_RoundTimerUI.text = ((int) m_RoundTimer).ToString();
+                        }
+                        if (m_RoundTimer <= 0 && isRoundOver == false)
+                        {
+                            EndRound();
+                        } 
+                        else if ((ScoreController.instance.westScore >= matchInfo.winningScore 
+                                    || ScoreController.instance.eastScore >= matchInfo.winningScore) 
+                                   && !isRoundOver)
+                        {
+                            EndRound();
+                        }
+                        
                     }
                 }
 
@@ -91,12 +93,44 @@ namespace WildHammers
                 {
                     CleanUpRound();
                 }
+                
+            #endregion
 
-                #endregion
+            #region Public Functions
+
+            public void HandlePauseInput()
+            {
+                if (!GameController.instance.isGamePaused && !PageController.instance.PageIsOn(PageType.Victory))
+                {
+                    PauseGame();
+                }
+                else
+                {
+                    UnpauseGame();
+                }
+            }
+
+
+            #endregion
 
 
             #region Private Functions
 
+            private void PauseGame()
+            {
+                Time.timeScale = 0;
+                PageController.instance.TurnPageOn(PageType.PauseMenu);
+                GameController.instance.isGamePaused = true;
+            }
+
+            private void UnpauseGame()
+            {
+                PageController.instance.TurnPageOff(PageType.PauseMenu);
+                Time.timeScale = 1;
+                GameController.instance.isGamePaused = false;
+                if(MatchController.instance.hasMatchStarted) SwitchAllPlayersActionMaps();
+            }
+            
             private void SwitchAllPlayersActionMaps()
                 {
                     foreach (PlayerInput _playerInput in m_PlayerInputs)
@@ -145,7 +179,7 @@ namespace WildHammers
                         GameObject _playerHammer = _playerInput.transform.GetChild(0).gameObject;
                         _playerHammer.SetActive(false);
                     }
-                    PageController.instance.TurnOffAllPages();
+                    PageController.instance.TurnPageOff(PageType.ScoreBoard);
                 }
                 
                 private void EndRound()

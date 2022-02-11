@@ -9,9 +9,9 @@ namespace WildHammers
         public class PlayerGamepadInputHandler : MonoBehaviour
         {
             public HammerController playerHammerController { get; private set; }
-            public Vector2 RawMovementInput { get; private set; }
-            public float InputXNormalized { get; private set; }
-            public float InputYNormalized { get; private set; }
+            public Vector2 rawMovementInput { get; private set; }
+            public float inputXNormalized { get; private set; }
+            public float inputYNormalized { get; private set; }
             
             public bool clockwiseInput { get; private set; }
 
@@ -21,92 +21,101 @@ namespace WildHammers
 
             public bool massIncreaseInput { get; private set; }
             
+            public bool pauseInput { get; private set;  }
+            
             private void Start()
             {
                 counterClockwiseInput = false;
                 clockwiseInput = false;
                 freezeInput = false;
                 massIncreaseInput = false;
+                pauseInput = false;
             }
 
-            private void Update()
+            public void OnClockwiseRotate(InputAction.CallbackContext _context)
             {
-            }
-
-            public void OnClockwiseRotate(InputAction.CallbackContext context)
-            {
-                if (context.started)
+                if (_context.started)
                 {
                     clockwiseInput = true;
                 }
                 
-                if (context.canceled)
+                if (_context.canceled)
                 {
                     clockwiseInput = false;
                 }
             }
 
-            public void OnCounterClockwiseRotate(InputAction.CallbackContext context)
+            public void OnCounterClockwiseRotate(InputAction.CallbackContext _context)
             {
-                if (context.started)
+                if (_context.started)
                 {
                     counterClockwiseInput = true;
                 }
                 
-                if (context.canceled)
+                if (_context.canceled)
                 {
                     counterClockwiseInput = false;
                 }
             }
 
-            public void OnFreezePosition(InputAction.CallbackContext context)
+            public void OnFreezePosition(InputAction.CallbackContext _context)
             {
-                if (context.started)
+                if (_context.started)
                 {
                     freezeInput = true;
                 }
                 
-                if (context.canceled)
+                if (_context.canceled)
                 {
                     freezeInput = false;
                 }
             }
             
-            public void OnMoveInput(InputAction.CallbackContext context)
+            public void OnMoveInput(InputAction.CallbackContext _context)
             {
-                RawMovementInput = context.ReadValue<Vector2>();
-                if (Mathf.Abs(RawMovementInput.x) > 0.5f)
+                rawMovementInput = _context.ReadValue<Vector2>();
+                if (Mathf.Abs(rawMovementInput.x) > 0.5f)
                 {
-                    InputXNormalized = (RawMovementInput * Vector2.right).x;
+                    inputXNormalized = (rawMovementInput * Vector2.right).x;
                 }
                 else
                 {
-                    InputXNormalized = 0;
+                    inputXNormalized = 0;
                 }
 
 
-                if (Mathf.Abs(RawMovementInput.y) > 0.5f)
+                if (Mathf.Abs(rawMovementInput.y) > 0.5f)
                 {
-                    InputYNormalized = (RawMovementInput * Vector2.up).y;
+                    inputYNormalized = (rawMovementInput * Vector2.up).y;
                 }
                 else
                 {
-                    InputYNormalized = 0;
+                    inputYNormalized = 0;
                 }
 
             }
             
-            public void OnIncreaseMass(InputAction.CallbackContext context)
+            public void OnIncreaseMass(InputAction.CallbackContext _context)
             {
-                if (context.started)
+                if (_context.started)
                 {
                     massIncreaseInput = true;
                 }
             
-                if (context.canceled)
+                if (_context.canceled)
                 {
                     massIncreaseInput = false;
                 }
+            }
+
+            public void OnPauseInput(InputAction.CallbackContext _context)
+            {
+                if (_context.started) pauseInput = true;
+            }
+
+            public void UsePauseInput()
+            {
+                pauseInput = false;
             }
         }
         

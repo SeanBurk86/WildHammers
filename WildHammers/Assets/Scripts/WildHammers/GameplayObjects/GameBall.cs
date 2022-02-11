@@ -1,6 +1,7 @@
 
 using System;
 using UnityCore.Audio;
+using UnityCore.Game;
 using UnityEngine;
 using AudioType = UnityCore.Audio.AudioType;
 
@@ -33,11 +34,15 @@ namespace WildHammers
 
             private void Update()
             {
-                // if the ball reaches a certain velocity
-                if (m_RigidBody.velocity.x >= m_GhostSpeed || m_RigidBody.velocity.y >= m_GhostSpeed)
+                if (!GameController.instance.isGamePaused)
                 {
-                    // turn on the ghost after image sprite
-                    BallGhostSpritePool.instance.Spawn(this);
+                    // if the ball reaches a certain velocity
+                    if (m_RigidBody.velocity.x >= m_GhostSpeed || m_RigidBody.velocity.y >= m_GhostSpeed)
+                    {
+                        // turn on the ghost after image sprite
+                        BallGhostSpritePool.instance.Spawn(this);
+                    }
+                        
                 }
             }
         }

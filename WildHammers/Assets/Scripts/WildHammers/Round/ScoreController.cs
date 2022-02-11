@@ -1,6 +1,7 @@
 
 using TMPro;
 using UnityCore.Audio;
+using UnityCore.Game;
 using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,8 +41,11 @@ namespace WildHammers
 
             private void Update()
             {
-                m_WestScoreText.text = westScore.ToString();
-                m_EastScoreText.text = eastScore.ToString();
+                if (!GameController.instance.isGamePaused)
+                {
+                    m_WestScoreText.text = westScore.ToString();
+                    m_EastScoreText.text = eastScore.ToString();
+                }
             }
 
             #endregion

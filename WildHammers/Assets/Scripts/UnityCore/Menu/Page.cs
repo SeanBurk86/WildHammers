@@ -74,6 +74,7 @@ namespace UnityCore
                     if (!_on)
                     {
                         isOn = false;
+                        Log("Turning off page "+this.type);
                         gameObject.SetActive(false);
                     }
                     else

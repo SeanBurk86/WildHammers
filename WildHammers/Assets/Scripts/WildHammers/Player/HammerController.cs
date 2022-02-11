@@ -1,7 +1,9 @@
 
 using TMPro;
 using UnityCore.Audio;
+using UnityCore.Game;
 using UnityEngine;
+using WildHammers.Round;
 using AudioType = UnityCore.Audio.AudioType;
 
 namespace WildHammers
@@ -14,8 +16,8 @@ namespace WildHammers
             public float hammerThrust = 300f;
             public TMP_Text headTMPText;
 
-            [SerializeField] private PlayerGamepadInputHandler InputHandler;
-            [SerializeField] private Rigidbody2D RBBottom, HammerRB;
+            [SerializeField] private PlayerGamepadInputHandler m_InputHandler;
+            [SerializeField] private Rigidbody2D m_RBBottom, m_HammerRB;
             [SerializeField] private GameObject m_HammerHead;
             [SerializeField] private Vector3 m_HammerHeadOffset = new Vector3(0,7,0);
             [SerializeField] private GameObject m_Pommel;
@@ -26,7 +28,7 @@ namespace WildHammers
             [SerializeField] private float m_KOTime = 1.5f;
             [SerializeField] private Animator m_HammmerAnimator;
 
-            private Vector2 CurrentVelocity, workspace;
+            private Vector2 m_CurrentVelocity, m_Workspace;
             private float m_KOTimer = 0f;
             private bool m_IsKOed;
 
@@ -34,9 +36,9 @@ namespace WildHammers
 
                 private void Start()
                 {
-                    if (InputHandler == null)
+                    if (m_InputHandler == null)
                     {
-                        InputHandler = gameObject.GetComponentInParent<PlayerGamepadInputHandler>();
+                        m_InputHandler = gameObject.GetComponentInParent<PlayerGamepadInputHandler>();
                     }
 
                     ResetChildrenPositionAndRotation();
@@ -44,54 +46,64 @@ namespace WildHammers
 
                 private void Update()
                 {
-                    m_KOTimer -= Time.deltaTime;
-                    if (m_KOTimer <= 0f)
+                    if (m_InputHandler.pauseInput)
                     {
-                        m_IsKOed = false;
-                        //Set anim isKOed to false
-                        m_HammmerAnimator.SetBool("isKOed", false);
+                        m_InputHandler.UsePauseInput();
+                        GameRoundController.instance.HandlePauseInput();
                     }
-                    
-                    if (!m_IsKOed)
-                    {
-                        float clockwiseAmount = amount * Time.deltaTime;
-                        if (InputHandler.freezeInput)
-                        {
-                            RBBottom.velocity = Vector2.zero;
-                        }
-                        if (InputHandler.counterClockwiseInput && !InputHandler.clockwiseInput)
-                        {
-                            RBBottom.AddTorque(clockwiseAmount);
-                        }
-                        else if (InputHandler.clockwiseInput && !InputHandler.counterClockwiseInput)
-                        {
-                            RBBottom.AddTorque(-1 * clockwiseAmount);
-                        }
-                        else if (!InputHandler.clockwiseInput && !InputHandler.counterClockwiseInput)
-                        {
-                            RBBottom.angularVelocity = 0f;
-                        }
-                        if ((InputHandler.InputXNormalized != 0 || InputHandler.InputYNormalized != 0) 
-                            && (InputHandler.clockwiseInput || InputHandler.counterClockwiseInput))
-                        {
-                            float hammerMovementSpeed = Mathf.Abs(hammerThrust * (RBBottom.angularVelocity/720));
-                            RBBottom.AddForce(new Vector2(InputHandler.InputXNormalized, InputHandler.InputYNormalized)*hammerMovementSpeed, ForceMode2D.Impulse);
-                        } else if ((InputHandler.InputXNormalized != 0 || InputHandler.InputYNormalized != 0)
-                                   && (InputHandler.clockwiseInput && InputHandler.counterClockwiseInput))
-                        {
-                            HammerRB.AddForce(new Vector2(InputHandler.InputXNormalized, InputHandler.InputYNormalized)*hammerThrust, ForceMode2D.Impulse);
-                        }
 
-                        if (InputHandler.massIncreaseInput)
+                    if (!GameController.instance.isGamePaused)
+                    {
+                        m_KOTimer -= Time.deltaTime;
+                        if (m_KOTimer <= 0f)
                         {
-                            HammerRB.mass += 50;
-                        }
-                        else
-                        {
-                            HammerRB.mass = 50;
+                            m_IsKOed = false;
+                            m_HammmerAnimator.SetBool("isKOed", false);
                         }
                         
+                        if (!m_IsKOed)
+                        {
+                            float clockwiseAmount = amount * Time.deltaTime;
+                            if (m_InputHandler.freezeInput)
+                            {
+                                m_RBBottom.velocity = Vector2.zero;
+                            }
+                            if (m_InputHandler.counterClockwiseInput && !m_InputHandler.clockwiseInput)
+                            {
+                                m_RBBottom.AddTorque(clockwiseAmount);
+                            }
+                            else if (m_InputHandler.clockwiseInput && !m_InputHandler.counterClockwiseInput)
+                            {
+                                m_RBBottom.AddTorque(-1 * clockwiseAmount);
+                            }
+                            else if (!m_InputHandler.clockwiseInput && !m_InputHandler.counterClockwiseInput)
+                            {
+                                m_RBBottom.angularVelocity = 0f;
+                            }
+                            if ((m_InputHandler.inputXNormalized != 0 || m_InputHandler.inputYNormalized != 0) 
+                                && (m_InputHandler.clockwiseInput || m_InputHandler.counterClockwiseInput))
+                            {
+                                float hammerMovementSpeed = Mathf.Abs(hammerThrust * (m_RBBottom.angularVelocity/720));
+                                m_RBBottom.AddForce(new Vector2(m_InputHandler.inputXNormalized, m_InputHandler.inputYNormalized)*hammerMovementSpeed, ForceMode2D.Impulse);
+                            } else if ((m_InputHandler.inputXNormalized != 0 || m_InputHandler.inputYNormalized != 0)
+                                       && (m_InputHandler.clockwiseInput && m_InputHandler.counterClockwiseInput))
+                            {
+                                m_HammerRB.AddForce(new Vector2(m_InputHandler.inputXNormalized, m_InputHandler.inputYNormalized)*hammerThrust, ForceMode2D.Impulse);
+                            }
+
+                            if (m_InputHandler.massIncreaseInput)
+                            {
+                                m_HammerRB.mass += 50;
+                            }
+                            else
+                            {
+                                m_HammerRB.mass = 50;
+                            }
+                            
+                        }
                     }
+
+
                 }
             
 
@@ -111,9 +123,9 @@ namespace WildHammers
                 
                 public void SetVelocity(float velocity, Vector2 direction)
                 {
-                    workspace = direction * velocity;
-                    HammerRB.velocity = workspace;
-                    CurrentVelocity = workspace;
+                    m_Workspace = direction * velocity;
+                    m_HammerRB.velocity = m_Workspace;
+                    m_CurrentVelocity = m_Workspace;
                 }
 
                 public void KOHammer()

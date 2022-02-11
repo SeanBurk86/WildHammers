@@ -14,7 +14,8 @@ namespace UnityCore
             TeamSelectRosterPanel,
             StartMenu,
             MatchSettings,
-            ConfigSettings
+            ConfigSettings,
+            PauseMenu
         }
     }
 }

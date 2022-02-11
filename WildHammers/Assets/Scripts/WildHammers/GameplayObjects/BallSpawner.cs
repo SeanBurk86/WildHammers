@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityCore.Audio;
+using UnityCore.Game;
 using UnityEngine;
 using WildHammers.GameplayObjects;
 using WildHammers.Round;
@@ -45,27 +46,31 @@ namespace WildHammers
 
             private void Update()
             {
-                m_DelayBetweenSpawnsTimer += Time.deltaTime;
-                
-                // update the balls in play reflecting the number of active child objects
-                int _numberOfActiveChildren = 0;
-                foreach (Transform _childTransform in gameObject.transform)
+                if (!GameController.instance.isGamePaused)
                 {
-                    if (_childTransform.gameObject.activeInHierarchy)
+                    m_DelayBetweenSpawnsTimer += Time.deltaTime;
+                    
+                    // update the balls in play reflecting the number of active child objects
+                    int _numberOfActiveChildren = 0;
+                    foreach (Transform _childTransform in gameObject.transform)
                     {
-                        _numberOfActiveChildren++;
+                        if (_childTransform.gameObject.activeInHierarchy)
+                        {
+                            _numberOfActiveChildren++;
+                        }
                     }
-                }
 
-                m_BallsInPlay = _numberOfActiveChildren;
-                
-                //check if balls in play + balls waiting to spawn is less than the match setting
-                if (((m_BallsInPlay + m_BallsWaitingToSpawn) < m_RequiredNumberOfBalls)
-                    && (m_DelayBetweenSpawnsTimer>=m_DelayBetweenSpawns))
-                {
-                    //if we're short "spawn" a ball
-                    SpawnBall();
-                    m_DelayBetweenSpawnsTimer = 0f;
+                    m_BallsInPlay = _numberOfActiveChildren;
+                    
+                    //check if balls in play + balls waiting to spawn is less than the match setting
+                    if (((m_BallsInPlay + m_BallsWaitingToSpawn) < m_RequiredNumberOfBalls)
+                        && (m_DelayBetweenSpawnsTimer>=m_DelayBetweenSpawns))
+                    {
+                        //if we're short "spawn" a ball
+                        SpawnBall();
+                        m_DelayBetweenSpawnsTimer = 0f;
+                    }
+                        
                 }
             }
 

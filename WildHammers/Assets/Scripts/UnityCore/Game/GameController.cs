@@ -11,11 +11,16 @@ namespace UnityCore
     {
         public class GameController : MonoBehaviour
         {
+            public static GameController instance = null;
+            
+            public bool isGamePaused;
+            
             #region Unity Functions
 
             private void Awake()
             {
-                SessionController.instance.InitializeGame(this);
+                if(!instance) Configure();
+                else Destroy(gameObject);
             }
 
             #endregion
@@ -24,14 +29,18 @@ namespace UnityCore
             
             public void OnInit()
             {
-                throw new NotImplementedException();
+                isGamePaused = false;
             }
 
             #endregion
 
             #region Private Functions
 
-            
+            private void Configure()
+            {
+                instance = this;
+                SessionController.instance.InitializeGame(this);
+            }
             
             
 

@@ -1,4 +1,5 @@
 
+using UnityCore.Game;
 using UnityEngine;
 
 namespace WildHammers
@@ -28,16 +29,20 @@ namespace WildHammers
 
             private void Update()
             {
-                m_Red -= m_RedDecay * Time.deltaTime;
-                m_Green -= m_GreenDecay * Time.deltaTime;
-                m_Blue -= m_BlueDecay * Time.deltaTime;
-                m_Alpha -= m_AlphaDecay * Time.deltaTime;
-                m_Color = new Color(m_Red, m_Green, m_Blue, m_Alpha);
-                m_SR.color = m_Color;
-        
-                if(Time.time >= (m_TimeActivated + m_ActiveTime))
+                if (!GameController.instance.isGamePaused)
                 {
-                    BallGhostSpritePool.instance.Release(this);
+                    m_Red -= m_RedDecay * Time.deltaTime;
+                    m_Green -= m_GreenDecay * Time.deltaTime;
+                    m_Blue -= m_BlueDecay * Time.deltaTime;
+                    m_Alpha -= m_AlphaDecay * Time.deltaTime;
+                    m_Color = new Color(m_Red, m_Green, m_Blue, m_Alpha);
+                    m_SR.color = m_Color;
+            
+                    if(Time.time >= (m_TimeActivated + m_ActiveTime))
+                    {
+                        BallGhostSpritePool.instance.Release(this);
+                    }
+                        
                 }
             }
         }

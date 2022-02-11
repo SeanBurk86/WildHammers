@@ -67,6 +67,9 @@ namespace WildHammers
                 private void SetupJoinPlayerInputPanel(PlayerInput _playerInput)
                 {
                     playerJoinMenu.transform.GetChild(_playerInput.playerIndex).gameObject.SetActive(false);
+                    // This is a little ugly but the idea is
+                    // the JoinPanelUI will be a child to the Player object the first time through
+                    // and a child of the Player Join Page afterwards
                     if (_playerInput.transform.GetComponentInChildren<JoinPanelUI>() != null)
                     {
                         Transform _joinPlayerUI = _playerInput.transform.GetChild(0);

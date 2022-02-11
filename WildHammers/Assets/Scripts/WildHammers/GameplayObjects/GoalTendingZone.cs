@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityCore.Audio;
+using UnityCore.Game;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using WildHammers.Player;
@@ -64,21 +65,25 @@ namespace WildHammers
 
             private void Update()
             {
-                if (m_OffenderTable != null)
+                if (!GameController.instance.isGamePaused)
                 {
-                    //iterate through the offender table
-                    foreach (KeyValuePair<int,GoalTendingTimer> _pair in m_OffenderTable)
+                    if (m_OffenderTable != null)
                     {
-                        //decrement their clock by Time.deltaTime
-                        _pair.Value.currentTime -= Time.deltaTime;
-                        //if offender's float is <= 0
-                        if (_pair.Value.currentTime <= 0f)
+                        //iterate through the offender table
+                        foreach (KeyValuePair<int,GoalTendingTimer> _pair in m_OffenderTable)
                         {
-                            // Shove the hammer
-                            ShoveGoalTendingHammers(_pair.Key);
+                            //decrement their clock by Time.deltaTime
+                            _pair.Value.currentTime -= Time.deltaTime;
+                            //if offender's float is <= 0
+                            if (_pair.Value.currentTime <= 0f)
+                            {
+                                // Shove the hammer
+                                ShoveGoalTendingHammers(_pair.Key);
+                            }
                         }
+                        
                     }
-                    
+                        
                 }
             }
 

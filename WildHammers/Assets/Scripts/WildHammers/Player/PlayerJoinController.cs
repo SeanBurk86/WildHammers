@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using UnityCore.Game;
 using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -45,20 +46,26 @@ namespace WildHammers
 
             private void Update()
             {
-                if (!MatchController.instance.hasMatchStarted)
+                if (!GameController.instance.isGamePaused)
                 {
-                    if (readyCount >= PlayerInputManager.instance.maxPlayerCount)
+                    if (!MatchController.instance.hasMatchStarted)
                     {
-                        areAllPlayersEntered = true;
-                        PageController.instance.TurnPageOff(PageType.PlayerJoin);
-                        PageController.instance.TurnPageOn(PageType.TeamSelectRosterPanel);
-                    } 
-                    else if (!PageController.instance.PageIsOn(PageType.PlayerJoin) 
-                             && !PageController.instance.PageIsOn(PageType.StartMenu)
-                             && !PageController.instance.PageIsOn(PageType.ConfigSettings))
-                    {
-                        PageController.instance.TurnPageOn(PageType.PlayerJoin);
+                        if (readyCount >= PlayerInputManager.instance.maxPlayerCount && !PageController.instance.PageIsOn(PageType.TeamSelectRosterPanel))
+                        {
+                            areAllPlayersEntered = true;
+                            PageController.instance.TurnPageOff(PageType.PlayerJoin);
+                            PageController.instance.TurnPageOn(PageType.TeamSelectRosterPanel);
+                        } 
+                        else if (!PageController.instance.PageIsOn(PageType.PlayerJoin) 
+                                 && !PageController.instance.PageIsOn(PageType.StartMenu)
+                                 && !PageController.instance.PageIsOn(PageType.ConfigSettings)
+                                 && !PageController.instance.PageIsOn(PageType.TeamSelectRosterPanel)
+                                 && !PageController.instance.PageIsOn(PageType.TeamSelect))
+                        {
+                            PageController.instance.TurnPageOn(PageType.PlayerJoin);
+                        }
                     }
+                        
                 }
             }
 

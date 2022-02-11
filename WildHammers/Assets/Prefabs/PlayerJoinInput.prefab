@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6900883789504666976}
   - component: {fileID: 7162853402209940984}
   - component: {fileID: 4293794121032745523}
+  - component: {fileID: 4184407056708510768}
   - component: {fileID: -1875233645337518718}
   - component: {fileID: 7907288383056956284}
-  - component: {fileID: 4184407056708510768}
   m_Layer: 0
   m_Name: PlayerJoinInput
   m_TagString: Untagged
@@ -237,11 +237,39 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 75a14dfa-32ea-40be-b046-8d4da39103e8
     m_ActionName: UI/StartButton[/XInputControllerWindows/start,/XInputControllerWindows1/start,/XInputControllerWindows2/start,/XInputControllerWindows3/start]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4184407056708510768}
+        m_TargetAssemblyTypeName: WildHammers.Player.PlayerGamepadInputHandler, Assembly-CSharp
+        m_MethodName: OnPauseInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 96976c89-aae5-4450-996f-2add4fed8629
+    m_ActionName: Player/Pause[/XInputControllerWindows/start,/XInputControllerWindows1/start,/XInputControllerWindows2/start,/XInputControllerWindows3/start]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &4184407056708510768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8789095535159909508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6455904d22d6fdc4aae394b6c82694ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-1875233645337518718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,18 +290,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8789095535159909508}
   m_CullTransparentMesh: 1
---- !u!114 &4184407056708510768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8789095535159909508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6455904d22d6fdc4aae394b6c82694ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2839580499783907593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -286,7 +302,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8739777951478226952, guid: d1b665cb649ae394fad30612af0b9535, type: 3}
+      propertyPath: m_HammerRB
+      value: 
+      objectReference: {fileID: 6634559839196899980}
+    - target: {fileID: 8739777951478226952, guid: d1b665cb649ae394fad30612af0b9535, type: 3}
+      propertyPath: m_RBBottom
+      value: 
+      objectReference: {fileID: 6634559838602952333}
+    - target: {fileID: 8739777951478226952, guid: d1b665cb649ae394fad30612af0b9535, type: 3}
       propertyPath: InputHandler
+      value: 
+      objectReference: {fileID: 4184407056708510768}
+    - target: {fileID: 8739777951478226952, guid: d1b665cb649ae394fad30612af0b9535, type: 3}
+      propertyPath: m_InputHandler
       value: 
       objectReference: {fileID: 4184407056708510768}
     - target: {fileID: 8897571823517923084, guid: d1b665cb649ae394fad30612af0b9535, type: 3}
@@ -343,6 +371,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b665cb649ae394fad30612af0b9535, type: 3}
+--- !u!50 &6634559838602952333 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 8897571824817047428, guid: d1b665cb649ae394fad30612af0b9535, type: 3}
+  m_PrefabInstance: {fileID: 2839580499783907593}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &6634559839196899980 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 8897571824063845253, guid: d1b665cb649ae394fad30612af0b9535, type: 3}
+  m_PrefabInstance: {fileID: 2839580499783907593}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6634559839742823941 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8897571823517923084, guid: d1b665cb649ae394fad30612af0b9535, type: 3}

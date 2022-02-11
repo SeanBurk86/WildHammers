@@ -84,7 +84,7 @@ namespace UnityCore
 
             private long EpochSeconds()
             {
-                var _epoch = new System.DateTimeOffset(System.DateTime.UtcNow);
+                var _epoch = new DateTimeOffset(DateTime.UtcNow);
                 return _epoch.ToUnixTimeSeconds();
             }
 
