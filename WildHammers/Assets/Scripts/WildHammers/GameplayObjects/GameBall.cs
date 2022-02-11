@@ -13,11 +13,12 @@ namespace WildHammers
         {
 
             private Rigidbody2D m_RigidBody;
-            [SerializeField] private float m_GhostSpeed = 5f;
+            private bool m_IsInGhostMode;
 
             private void Awake()
             {
                 m_RigidBody = GetComponent<Rigidbody2D>();
+                m_IsInGhostMode = false;
             }
 
             void OnCollisionEnter2D(Collision2D other)
@@ -32,17 +33,20 @@ namespace WildHammers
                 }
             }
 
+            public void ActivateTrail()
+            {
+                m_IsInGhostMode = true;
+            }
+
             private void Update()
             {
                 if (!GameController.instance.isGamePaused)
                 {
-                    // if the ball reaches a certain velocity
-                    if (m_RigidBody.velocity.x >= m_GhostSpeed || m_RigidBody.velocity.y >= m_GhostSpeed)
-                    {
-                        // turn on the ghost after image sprite
-                        BallGhostSpritePool.instance.Spawn(this);
-                    }
-                        
+                    if (Mathf.Abs(m_RigidBody.velocity.x) <= 5f 
+                             && Mathf.Abs(m_RigidBody.velocity.y) <= 5f ) 
+                        m_IsInGhostMode = false;
+                    
+                    if (m_IsInGhostMode) BallGhostSpritePool.instance.Spawn(this);
                 }
             }
         }

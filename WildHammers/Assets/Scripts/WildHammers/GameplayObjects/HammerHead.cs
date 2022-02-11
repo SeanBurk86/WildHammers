@@ -20,13 +20,15 @@ namespace WildHammers
                 {
                     if (_other.transform.gameObject.CompareTag("GameBall"))
                     {
-                        Vector2 dir = _other.contacts[0].point - new Vector2(transform.position.x, transform.position.y);
+                        Vector2 _dir = _other.contacts[0].point - new Vector2(transform.position.x, transform.position.y);
                         float finalForce = Mathf.Abs(force * (pommelRB.angularVelocity));
-                        dir = -dir.normalized;
+                        _dir = -_dir.normalized;
                         BallSparksSpawner.instance.Spawn(_other.contacts[0].point);
-                        Rigidbody2D otherBody = _other.gameObject.GetComponent<Rigidbody2D>();
-                        otherBody.AddForce(dir*finalForce, ForceMode2D.Impulse);
+                        Rigidbody2D _otherBody = _other.gameObject.GetComponent<Rigidbody2D>();
+                        GameBall _otherGameBall = _other.gameObject.GetComponent<GameBall>();
+                        _otherBody.AddForce(_dir*finalForce, ForceMode2D.Impulse);
                         AudioController.instance.PlayAudio(AudioType.SFX_02);
+                        _otherGameBall.ActivateTrail();
                     }
                     else if (_other.transform.gameObject.CompareTag("HammerHead"))
                     {
