@@ -74,6 +74,7 @@ namespace UnityCore
             private void Configure()
             {
                 instance = this;
+                DontDestroyOnLoad(gameObject);
                 StartSession();
             }
 

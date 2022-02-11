@@ -11,7 +11,7 @@ namespace UnityCore
     {
         public class GameController : MonoBehaviour
         {
-            public static GameController instance = null;
+            public static GameController instance;
             
             public bool isGamePaused;
             
@@ -19,8 +19,14 @@ namespace UnityCore
 
             private void Awake()
             {
-                if(!instance) Configure();
-                else Destroy(gameObject);
+                if (!instance)
+                {
+                    Configure();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
 
             #endregion
@@ -39,7 +45,8 @@ namespace UnityCore
             private void Configure()
             {
                 instance = this;
-                SessionController.instance.InitializeGame(this);
+                DontDestroyOnLoad(gameObject);
+                SessionController.instance.InitializeGame(instance);
             }
             
             

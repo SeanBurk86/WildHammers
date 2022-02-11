@@ -17,6 +17,7 @@ namespace UnityCore
             SFX_07,
             SFX_08,
             SFX_09,
+            SFX_10,
             none
             //... custom audio types go here
         }

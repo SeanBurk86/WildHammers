@@ -11,9 +11,7 @@ namespace WildHammers
         {
             public float force = 7f;
             [SerializeField] private Rigidbody2D pommelRB;
-            [SerializeField] private float angularVelocityThreshold = 1800f;
-            [SerializeField] private ParticleSystem m_BallSparks;
-            [SerializeField] private ParticleSystem m_HammerHeadSparks;
+            [SerializeField] private float angularVelocityThreshold = 800f;
             void OnCollisionEnter2D(Collision2D _other)
             {
                 if (Mathf.Abs(pommelRB.angularVelocity) > angularVelocityThreshold)
@@ -40,6 +38,15 @@ namespace WildHammers
                     }
                 }
             }
+
+            public void HandleWhooshPointCollision()
+            {
+                if (Mathf.Abs(pommelRB.angularVelocity) > angularVelocityThreshold)
+                {
+                    AudioController.instance.PlayAudio(AudioType.SFX_10);
+                }
+            }
+            
         }
     }
 }
