@@ -1,9 +1,8 @@
 
-using System;
+using UnityCore.Data;
 using UnityCore.Session;
 using UnityEngine;
-using WildHammers.Match;
-using WildHammers.Team;
+using UnityEngine.Audio;
 
 namespace UnityCore
 {
@@ -12,6 +11,8 @@ namespace UnityCore
         public class GameController : MonoBehaviour
         {
             public static GameController instance;
+            
+            public AudioMixer audioMixer;
             
             public bool isGamePaused;
             
@@ -27,6 +28,13 @@ namespace UnityCore
                 {
                     Destroy(gameObject);
                 }
+                
+            }
+
+            private void Start()
+            {
+                SessionController.instance.InitializeGame(instance);
+                SetVolumeSettings();
             }
 
             #endregion
@@ -46,10 +54,14 @@ namespace UnityCore
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
-                SessionController.instance.InitializeGame(instance);
             }
             
-            
+            private void SetVolumeSettings()
+            { 
+                audioMixer.SetFloat("Volume", DataController.instance.MasterVolume);
+                audioMixer.SetFloat("MusicVolume", DataController.instance.MusicVolume);
+                audioMixer.SetFloat("SFXVolume",  DataController.instance.SfxVolume);
+            }
 
             #endregion
         }

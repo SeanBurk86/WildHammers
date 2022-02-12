@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 namespace UnityCore
@@ -7,38 +8,49 @@ namespace UnityCore
     {
         public class DataController : MonoBehaviour
         {
-            private static readonly string DATA_SCORE = "score";
-            private static readonly string DATA_HIGHSCORE = "highscore";
+            public static DataController instance = null;
+            
+            private static readonly string MASTER_VOLUME = "mastervolume";
+            private static readonly string MUSIC_VOLUME = "musicvolume";
+            private static readonly string SFX_VOLUME = "sfxvolume";
             private static readonly int DEFAULT_INT = 0;
 
             #region Properties
-
-            public int Score
+            public int MasterVolume
             {
                 get
                 {
-                    return GetInt(DATA_SCORE);
+                    return GetInt(MASTER_VOLUME);
                 }
                 set
                 {
-                    SaveInt(DATA_SCORE, value);
-                    int _score = this.Score;
-                    if (_score > this.HighScore)
-                    {
-                        this.HighScore = _score;
-                    }
+                    SaveInt(MASTER_VOLUME, value);
                 }
             }
 
-            public int HighScore
+            public int MusicVolume
             {
                 get
                 {
-                    return GetInt(DATA_HIGHSCORE);
+                    return GetInt(MUSIC_VOLUME);
                 }
-                private set
+                set
                 {
-                    SaveInt(DATA_HIGHSCORE, value);
+                    SaveInt(MUSIC_VOLUME, value);
+                }
+            }
+            
+            
+
+            public int SfxVolume
+            {
+                get
+                {
+                    return GetInt(SFX_VOLUME);
+                }
+                set
+                {
+                    SaveInt(SFX_VOLUME, value);
                 }
             }
 
@@ -46,7 +58,11 @@ namespace UnityCore
                 
             #region Unity Functions
 
-            
+            private void Awake()
+            {
+                if (!instance) Configure();
+                else Destroy(gameObject);
+            }
 
             #endregion
             
@@ -61,7 +77,12 @@ namespace UnityCore
             {
                 return PlayerPrefs.GetInt(_data, DEFAULT_INT);
             }
-            
+
+            private void Configure()
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
 
             #endregion
         }

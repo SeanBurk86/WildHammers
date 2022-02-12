@@ -1,9 +1,13 @@
 
+using System;
+using UnityCore.Data;
+using UnityCore.Game;
 using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.UI;
 
 namespace WildHammers
 {
@@ -11,37 +15,39 @@ namespace WildHammers
     {
         public class SettingMenu : MonoBehaviour
         {
-            public AudioMixer audioMixer;
+            [SerializeField] private Slider m_MasterVolumeSlider;
+            [SerializeField] private Slider m_MusicVolumeSlider;
+            [SerializeField] private Slider m_SfxVolumeSlider;
+
+            private void OnEnable()
+            {
+                SetVolumeSliders();
+            }
             
-            [SerializeField] private GameObject startMenuButtons, startAMatchButton, startPrompt;
+            private void SetVolumeSliders()
+            {
+                m_MasterVolumeSlider.value = DataController.instance.MasterVolume;
+                m_MusicVolumeSlider.value = DataController.instance.MusicVolume;
+                m_SfxVolumeSlider.value = DataController.instance.SfxVolume;
+            }
 
             public void SetMasterVolume(float _volume)
             {
-                Debug.Log("Master _volume is "+_volume);
-                audioMixer.SetFloat("Volume", _volume);
+                GameController.instance.audioMixer.SetFloat("Volume", _volume);
+                DataController.instance.MasterVolume = (int) _volume;
             }
-            
-            public void SetSFXVolume(float _volume)
-            {
-                Debug.Log("SFX _volume is "+_volume);
-                audioMixer.SetFloat("SFXVolume", _volume);
-            }
-            
+
             public void SetMusicVolume(float _volume)
             {
-                Debug.Log("Music _volume is "+_volume);
-                audioMixer.SetFloat("MusicVolume", _volume);
+                GameController.instance.audioMixer.SetFloat("MusicVolume", _volume);
+                DataController.instance.MusicVolume = (int) _volume;
             }
 
-            public void OnBack(PlayerInput _playerInput)
+            public void SetSfxVolume(float _volume)
             {
-                PageController.instance.TurnPageOff(PageType.ConfigSettings, PageType.StartMenu);
-                startPrompt.SetActive(false);
-                startMenuButtons.SetActive(true);
-                MultiplayerEventSystem _multiplayerEventSystem = _playerInput.transform.GetComponent<MultiplayerEventSystem>();
-                _multiplayerEventSystem.SetSelectedGameObject(startAMatchButton);
+                GameController.instance.audioMixer.SetFloat("SFXVolume", _volume);
+                DataController.instance.SfxVolume = (int) _volume;
             }
-
 
         }
         

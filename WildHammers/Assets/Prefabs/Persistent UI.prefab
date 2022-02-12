@@ -674,7 +674,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: -80
   m_MaxValue: 0
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5620,7 +5620,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: -80
   m_MaxValue: 0
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8474,7 +8474,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: -80
   m_MaxValue: 0
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8621,9 +8621,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: a88b3ff6e79d27542913723dfd84f3f3, type: 2}
-  startMenuButtons: {fileID: 1613414056249044803}
-  startAMatchButton: {fileID: 3075716922939716767}
-  startPrompt: {fileID: 6178651494593390227}
+  m_MasterVolumeSlider: {fileID: 5327263824448350781}
+  m_MusicVolumeSlider: {fileID: 3038555711695747998}
+  m_SfxVolumeSlider: {fileID: 4701439564343576673}
 --- !u!114 &2462282987569845647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9291,6 +9291,7 @@ GameObject:
   - component: {fileID: 195519733371793272}
   - component: {fileID: 4949261891758773915}
   - component: {fileID: 545825752805592867}
+  - component: {fileID: 7051956845617005500}
   m_Layer: 5
   m_Name: PauseMenuPage
   m_TagString: Untagged
@@ -9358,6 +9359,22 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 103
   m_TargetDisplay: 0
+--- !u!114 &7051956845617005500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957667184261304709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c752d335ea6345a4a9fdf15100d47c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: a88b3ff6e79d27542913723dfd84f3f3, type: 2}
+  m_MasterVolumeSlider: {fileID: 4509680015966028056}
+  m_MusicVolumeSlider: {fileID: 905720941377460077}
+  m_SfxVolumeSlider: {fileID: 357541113769346105}
 --- !u!1 &5001506103248032151
 GameObject:
   m_ObjectHideFlags: 0
@@ -12914,7 +12931,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: -80
   m_MaxValue: 0
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13476,7 +13493,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: -80
   m_MaxValue: 0
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14429,14 +14446,14 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: -80
   m_MaxValue: 0
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5637326836775049017}
         m_TargetAssemblyTypeName: WildHammers.UI.SettingMenu, Assembly-CSharp
-        m_MethodName: SetSFXVolume
+        m_MethodName: SetSfxVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
