@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using TMPro;
 using UnityCore.Audio;
 using UnityCore.Game;
@@ -25,6 +26,8 @@ namespace WildHammers
             
             [SerializeField] private GameObject firstSelectedInVictoryMenu;
 
+            public Dictionary<string, int> playerToGoalsScoredTable;
+
             #region Unity Functions
 
             private void Awake()
@@ -37,6 +40,8 @@ namespace WildHammers
                 {
                     Destroy(gameObject);
                 }
+
+                playerToGoalsScoredTable = new Dictionary<string, int>();
             }
 
             private void Update()
@@ -52,7 +57,7 @@ namespace WildHammers
 
             #region Public Functions
 
-            public void IncrementScore(int _points, GoalType _goal)
+            public void IncrementScore(int _points, GoalType _goal, string _lastTouchedPlayer)
             {
                 if (_goal == GoalType.WEST)
                 {
@@ -62,6 +67,7 @@ namespace WildHammers
                 {
                     eastScore += _points;
                 }
+                AddToGoalsScoredTable(_lastTouchedPlayer);
             }
 
             #endregion
@@ -86,6 +92,18 @@ namespace WildHammers
             private void LogWarning(string _msg)
             {
                 Debug.LogWarning("[ScoreController]: "+_msg);
+            }
+
+            private void AddToGoalsScoredTable(string _lastTouchedPlayer)
+            {
+                if (playerToGoalsScoredTable.ContainsKey(_lastTouchedPlayer))
+                {
+                    playerToGoalsScoredTable[_lastTouchedPlayer] = playerToGoalsScoredTable[_lastTouchedPlayer] + 1;
+                }
+                else
+                {
+                    playerToGoalsScoredTable.Add(_lastTouchedPlayer, 1);
+                }
             }
 
             #endregion

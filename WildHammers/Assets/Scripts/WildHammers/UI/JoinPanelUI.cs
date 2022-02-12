@@ -1,5 +1,6 @@
 
 using TMPro;
+using UnityCore.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -22,7 +23,7 @@ namespace WildHammers
             [SerializeField] private TMP_Text joinPhaseText;
             [SerializeField] private GameObject initialsPanel;
             [SerializeField] private GameObject zodiacPanel;
-            [SerializeField] private GameObject playerReadyText;
+            [SerializeField] private TMP_Text playerReadyText;
             [SerializeField] private EventSystem eventSystem;
             [SerializeField] private GameObject postDeleteSelectButton;
             [SerializeField] private GameObject firstSelectedZodiacButton;
@@ -67,8 +68,10 @@ namespace WildHammers
                     else if (hasSubmittedInitials && hasSubmittedZodiac)
                     {
                         zodiacPanel.SetActive(false);
-                        playerReadyText.SetActive(true);
-                        playerPromptDisplay.text = playerInfo.playerInitials + " the " + playerInfo.zodiacSign;
+                        playerReadyText.gameObject.SetActive(true);
+                        playerReadyText.text = playerInfo.playerInitials + " the " + playerInfo.zodiacSign;
+                        playerPromptDisplay.text = "Total Goals Scored: " + 
+                                                   "\n" + DataController.instance.GetPlayerTotalGoals(playerInfo.playerInitials+playerInfo.zodiacSign);
                         joinPhaseText.text = "Here we go!";
                     }
                 }

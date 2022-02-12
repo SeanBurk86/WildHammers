@@ -3,6 +3,7 @@ using System;
 using UnityCore.Audio;
 using UnityCore.Game;
 using UnityEngine;
+using WildHammers.Player;
 using AudioType = UnityCore.Audio.AudioType;
 
 namespace WildHammers
@@ -14,6 +15,7 @@ namespace WildHammers
 
             private Rigidbody2D m_RigidBody;
             private bool m_IsInGhostMode;
+            public  string lastPlayerTouched = "7777";
 
             private void Awake()
             {
@@ -21,13 +23,20 @@ namespace WildHammers
                 m_IsInGhostMode = false;
             }
 
-            void OnCollisionEnter2D(Collision2D other)
+            void OnCollisionEnter2D(Collision2D _other)
             {
-                if (other.transform.gameObject.CompareTag("ArenaWall"))
+                if (_other.transform.gameObject.CompareTag("Pommel")
+                    || _other.transform.gameObject.CompareTag("HammerHead")
+                    || _other.transform.gameObject.CompareTag("PlayerHammer"))
+                {
+                    PlayerInfo _playerInfo = _other.transform.parent.parent.gameObject.GetComponent<PlayerInfo>();
+                    lastPlayerTouched =  _playerInfo.playerInitials + _playerInfo.zodiacSign;
+                }
+                else if (_other.transform.gameObject.CompareTag("ArenaWall"))
                 {
                     AudioController.instance.PlayAudio(AudioType.SFX_01);
                 }
-                else if (other.transform.gameObject.CompareTag("GameBall"))
+                else if (_other.transform.gameObject.CompareTag("GameBall"))
                 {
                     AudioController.instance.PlayAudio(AudioType.SFX_03);
                 }

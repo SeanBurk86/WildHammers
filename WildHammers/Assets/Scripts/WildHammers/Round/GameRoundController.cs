@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityCore.Audio;
+using UnityCore.Data;
 using UnityCore.Game;
 using UnityCore.Menu;
 using UnityEngine;
@@ -185,6 +186,7 @@ namespace WildHammers
                 private void EndRound()
                 {
                     isRoundOver = true;
+                    AddStatsToRecords();
                     AudioController.instance.PlayAudio(AudioType.SFX_04);
                     AudioController.instance.PlayAudio(AudioType.ST_03);
                     PageController.instance.TurnPageOn(PageType.Victory);
@@ -198,6 +200,14 @@ namespace WildHammers
                 private void LogWarning(string _msg)
                 {
                     Debug.LogWarning("[GameRoundController]: " + _msg);
+                }
+
+                private void AddStatsToRecords()
+                {
+                    foreach (var _entry in ScoreController.instance.playerToGoalsScoredTable)
+                    {
+                        DataController.instance.IncrementPlayerTotalGoals(_entry.Key, _entry.Value);
+                    }
                 }
 
 

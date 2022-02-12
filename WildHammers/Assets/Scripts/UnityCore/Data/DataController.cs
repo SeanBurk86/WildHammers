@@ -13,6 +13,7 @@ namespace UnityCore
             private static readonly string MASTER_VOLUME = "mastervolume";
             private static readonly string MUSIC_VOLUME = "musicvolume";
             private static readonly string SFX_VOLUME = "sfxvolume";
+            private static readonly string TOTAL_GOALS_SUFFIX = "_totalgoals";
             private static readonly int DEFAULT_INT = 0;
 
             #region Properties
@@ -62,6 +63,20 @@ namespace UnityCore
             {
                 if (!instance) Configure();
                 else Destroy(gameObject);
+            }
+
+            #endregion
+
+            #region Public Functions
+
+            public int GetPlayerTotalGoals(string _playerInfoString)
+            {
+                return GetInt(_playerInfoString + TOTAL_GOALS_SUFFIX);
+            }
+
+            public void IncrementPlayerTotalGoals(string _playerInfoString, int _points)
+            {
+                SaveInt(_playerInfoString+TOTAL_GOALS_SUFFIX, GetPlayerTotalGoals(_playerInfoString)+_points);
             }
 
             #endregion
