@@ -193,6 +193,7 @@ namespace UnityCore
                 {
                     case SceneType.MainGame: return "MainGame";
                     case SceneType.MainMenu: return "MainMenu";
+                    case SceneType.Practice: return "Practice";
                     default:
                         LogWarning("Scene ["+_scene+"] does not contain a string for a valid scene");
                         return String.Empty;
@@ -205,6 +206,7 @@ namespace UnityCore
                 {
                     case "MainGame": return SceneType.MainGame;
                     case "MainMenu": return SceneType.MainMenu;
+                    case "Practice": return SceneType.Practice;
                     default:
                         LogWarning("Scene ["+_scene+"] does not contain a string for a valid scene");
                         return SceneType.None;

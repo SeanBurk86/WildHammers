@@ -49,7 +49,7 @@ namespace WildHammers
                     if (m_InputHandler.pauseInput)
                     {
                         m_InputHandler.UsePauseInput();
-                        GameRoundController.instance.HandlePauseInput();
+                        GameController.instance.HandlePauseInput();
                     }
 
                     if (!GameController.instance.isGamePaused)

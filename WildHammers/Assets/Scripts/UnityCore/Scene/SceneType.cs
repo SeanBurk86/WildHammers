@@ -7,7 +7,8 @@ namespace UnityCore
         {
             None,
             MainGame,
-            MainMenu
+            MainMenu,
+            Practice
         }
     }
 }

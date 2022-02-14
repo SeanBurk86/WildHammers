@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 namespace WildHammers
@@ -43,6 +44,15 @@ namespace WildHammers
                     hammerColor = _color;
                 }
             
+
+            #endregion
+
+            #region Unity Functions
+
+            private void Awake()
+            {
+                hammerColor = new Color(1, 1, 1, 1);
+            }
 
             #endregion
 

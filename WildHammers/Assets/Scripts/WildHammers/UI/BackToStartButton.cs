@@ -1,12 +1,12 @@
 
 using UnityCore.Audio;
+using UnityCore.Game;
 using UnityCore.Menu;
 using UnityCore.Scene;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using WildHammers.Match;
 using WildHammers.Player;
-using WildHammers.Round;
 
 namespace WildHammers
 {
@@ -23,6 +23,7 @@ namespace WildHammers
                 }
                 else if (PageController.instance.PageIsOn(PageType.PauseMenu))
                 {
+                    GameController.instance.HandlePauseInput();
                     SceneController.instance.Load(SceneType.MainMenu,false,PageType.Loading);
                     MatchController.instance.hasMatchStarted = false;
                     MatchController.instance.areSettingsSet = false;
@@ -30,7 +31,6 @@ namespace WildHammers
                     MatchController.instance.areTeamsPicked = false;
                     MatchController.instance.FlushTeamSettings();
                     AudioController.instance.PlayAudio(AudioType.ST_01);
-                    GameRoundController.instance.HandlePauseInput();
                     PlayerJoinController.instance.ResetJoinPanel();
                     PageController.instance.TurnPageOn(PageType.StartMenu);
                 }

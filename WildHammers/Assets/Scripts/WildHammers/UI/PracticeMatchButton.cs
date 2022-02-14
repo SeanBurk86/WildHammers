@@ -1,19 +1,22 @@
 
-using UnityCore.Game;
+using UnityCore.Menu;
+using UnityCore.Scene;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace WildHammers
 {
-    namespace GameplayObjects
+    namespace UI
     {
-        public class ResumeMatchButton : Button
+        public class PracticeMatchButton : Button
         {
             public override void OnSubmit(BaseEventData eventData)
             {
                 base.OnSubmit(eventData);
-                GameController.instance.HandlePauseInput();
+                SceneController.instance.Load(SceneType.Practice, false, PageType.Loading);
             }
         }
     }
 }
+

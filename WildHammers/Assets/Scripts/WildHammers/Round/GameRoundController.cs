@@ -54,7 +54,7 @@ namespace WildHammers
                     m_RoundTimer = matchInfo.roundTimeLength;
 
                     firstSelectedInVictoryMenu = PageController.instance.pages[1].transform.GetChild(2).gameObject;
-                    SwitchAllPlayersActionMaps();
+                    GameController.instance.SwitchAllPlayersActionMaps();
                     SetHammerPositions();
                     ActivateHammers();
                     PageController.instance.TurnPageOn(PageType.ScoreBoard);
@@ -98,18 +98,7 @@ namespace WildHammers
             #endregion
 
             #region Public Functions
-
-            public void HandlePauseInput()
-            {
-                if (!GameController.instance.isGamePaused && !PageController.instance.PageIsOn(PageType.Victory))
-                {
-                    PauseGame();
-                }
-                else
-                {
-                    UnpauseGame();
-                }
-            }
+            
 
 
             #endregion
@@ -117,101 +106,78 @@ namespace WildHammers
 
             #region Private Functions
 
-            private void PauseGame()
+            private void SetHammerPositions()
             {
-                Time.timeScale = 0;
-                PageController.instance.TurnPageOn(PageType.PauseMenu);
-                GameController.instance.isGamePaused = true;
+                //TODO clean this up with for loops
+                GameObject _teamWestPlayer1Hammer = matchInfo.teamWest.teamRoster[0].transform.GetChild(0).gameObject;
+                GameObject _teamWestPlayer2Hammer = matchInfo.teamWest.teamRoster[1].transform.GetChild(0).gameObject;
+                GameObject _teamEastPlayer1Hammer = matchInfo.teamEast.teamRoster[0].transform.GetChild(0).gameObject;
+                GameObject _teamEastPlayer2Hammer = matchInfo.teamEast.teamRoster[1].transform.GetChild(0).gameObject;
+                _teamWestPlayer1Hammer.transform.position = hammerStartingPositions[0].position;
+                _teamWestPlayer1Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
+                _teamWestPlayer2Hammer.transform.position = hammerStartingPositions[2].position;
+                _teamWestPlayer2Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
+                _teamEastPlayer1Hammer.transform.position = hammerStartingPositions[1].position;
+                _teamEastPlayer1Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
+                _teamEastPlayer2Hammer.transform.position = hammerStartingPositions[3].position;
+                _teamEastPlayer2Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
             }
 
-            private void UnpauseGame()
+            private void ActivateHammers()
             {
-                PageController.instance.TurnPageOff(PageType.PauseMenu);
-                Time.timeScale = 1;
-                GameController.instance.isGamePaused = false;
-                if(MatchController.instance.hasMatchStarted) SwitchAllPlayersActionMaps();
+                foreach (PlayerInput _playerInput in m_PlayerInputs)
+                {
+                    GameObject _playerHammer = _playerInput.transform.GetComponentInChildren<HammerController>(true).gameObject;
+                    PlayerInfo _playerInfo = _playerInput.transform.GetComponent<PlayerInfo>();
+                    SpriteRenderer[] _hammerSprites = _playerHammer.GetComponentsInChildren<SpriteRenderer>();
+                    foreach (SpriteRenderer _spriteRenderer in _hammerSprites)
+                    {
+                        _spriteRenderer.color = _playerInfo.hammerColor;
+                    }
+                    _playerHammer.GetComponent<HammerController>().headTMPText.text = _playerInfo.playerInitials;
+                    _playerHammer.SetActive(true);
+                }
+            }
+
+            private void CleanUpRound()
+            {
+                foreach (PlayerInput _playerInput in m_PlayerInputs)
+                {
+                    GameObject _playerHammer = _playerInput.transform.GetComponentInChildren<HammerController>(true).transform.gameObject;
+                    _playerHammer.SetActive(false);
+                }
+                PageController.instance.TurnPageOff(PageType.ScoreBoard);
             }
             
-            private void SwitchAllPlayersActionMaps()
-                {
-                    foreach (PlayerInput _playerInput in m_PlayerInputs)
-                    {
-                        _playerInput.SwitchCurrentActionMap("Player");
-                    }
-                }
+            private void EndRound()
+            {
+                isRoundOver = true;
+                AddStatsToRecords();
+                AudioController.instance.PlayAudio(AudioType.SFX_04);
+                AudioController.instance.PlayAudio(AudioType.ST_03);
+                PageController.instance.TurnPageOn(PageType.Victory);
+            }
 
-                private void SetHammerPositions()
-                {
-                    //TODO clean this up with for loops
-                    GameObject _teamWestPlayer1Hammer = matchInfo.teamWest.teamRoster[0].transform.GetChild(0).gameObject;
-                    GameObject _teamWestPlayer2Hammer = matchInfo.teamWest.teamRoster[1].transform.GetChild(0).gameObject;
-                    GameObject _teamEastPlayer1Hammer = matchInfo.teamEast.teamRoster[0].transform.GetChild(0).gameObject;
-                    GameObject _teamEastPlayer2Hammer = matchInfo.teamEast.teamRoster[1].transform.GetChild(0).gameObject;
-                    _teamWestPlayer1Hammer.transform.position = hammerStartingPositions[0].position;
-                    _teamWestPlayer1Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
-                    _teamWestPlayer2Hammer.transform.position = hammerStartingPositions[2].position;
-                    _teamWestPlayer2Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
-                    _teamEastPlayer1Hammer.transform.position = hammerStartingPositions[1].position;
-                    _teamEastPlayer1Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
-                    _teamEastPlayer2Hammer.transform.position = hammerStartingPositions[3].position;
-                    _teamEastPlayer2Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
-                }
+            private void Log(string _msg)
+            {
+                Debug.Log("[GameRoundController]: "+_msg);
+            }
 
-                private void ActivateHammers()
-                {
-                    foreach (PlayerInput _playerInput in m_PlayerInputs)
-                    {
-                        GameObject _playerHammer = _playerInput.transform.GetChild(0).gameObject;
-                        PlayerInfo _playerInfo = _playerInput.transform.GetComponent<PlayerInfo>();
-                        SpriteRenderer[] _hammerSprites = _playerHammer.GetComponentsInChildren<SpriteRenderer>();
-                        foreach (SpriteRenderer _spriteRenderer in _hammerSprites)
-                        {
-                            _spriteRenderer.color = _playerInfo.hammerColor;
-                        }
-                        _playerHammer.GetComponent<HammerController>().headTMPText.text = _playerInfo.playerInitials;
-                        _playerHammer.SetActive(true);
-                    }
-                }
+            private void LogWarning(string _msg)
+            {
+                Debug.LogWarning("[GameRoundController]: " + _msg);
+            }
 
-                private void CleanUpRound()
+            private void AddStatsToRecords()
+            {
+                foreach (var _entry in ScoreController.instance.playerToGoalsScoredTable)
                 {
-                    foreach (PlayerInput _playerInput in m_PlayerInputs)
-                    {
-                        GameObject _playerHammer = _playerInput.transform.GetChild(0).gameObject;
-                        _playerHammer.SetActive(false);
-                    }
-                    PageController.instance.TurnPageOff(PageType.ScoreBoard);
+                    DataController.instance.IncrementPlayerTotalGoals(_entry.Key, _entry.Value);
                 }
-                
-                private void EndRound()
-                {
-                    isRoundOver = true;
-                    AddStatsToRecords();
-                    AudioController.instance.PlayAudio(AudioType.SFX_04);
-                    AudioController.instance.PlayAudio(AudioType.ST_03);
-                    PageController.instance.TurnPageOn(PageType.Victory);
-                }
-
-                private void Log(string _msg)
-                {
-                    Debug.Log("[GameRoundController]: "+_msg);
-                }
-
-                private void LogWarning(string _msg)
-                {
-                    Debug.LogWarning("[GameRoundController]: " + _msg);
-                }
-
-                private void AddStatsToRecords()
-                {
-                    foreach (var _entry in ScoreController.instance.playerToGoalsScoredTable)
-                    {
-                        DataController.instance.IncrementPlayerTotalGoals(_entry.Key, _entry.Value);
-                    }
-                }
+            }
 
 
-                #endregion
+            #endregion
         }
     }
 }

@@ -72,7 +72,7 @@ namespace WildHammers
                     // and a child of the Player Join Page afterwards
                     if (_playerInput.transform.GetComponentInChildren<JoinPanelUI>() != null)
                     {
-                        Transform _joinPlayerUI = _playerInput.transform.GetChild(0);
+                        Transform _joinPlayerUI = _playerInput.transform.GetComponentInChildren<JoinPanelUI>().transform;
                         _joinPlayerUI.SetParent(playerJoinMenu.transform, false);
                         if (_playerInput.playerIndex > 0)
                         {

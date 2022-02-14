@@ -1,8 +1,12 @@
 
 using UnityCore.Data;
+using UnityCore.Menu;
 using UnityCore.Session;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
+using WildHammers.Match;
+using WildHammers.Player;
 
 namespace UnityCore
 {
@@ -45,6 +49,30 @@ namespace UnityCore
             {
                 isGamePaused = false;
             }
+            
+            public void HandlePauseInput()
+            {
+                if (MatchController.instance.hasMatchStarted)
+                {
+                    if (!isGamePaused && !PageController.instance.PageIsOn(PageType.Victory))
+                    {
+                        PauseGame();
+                    }
+                    else
+                    {
+                        UnpauseGame();
+                    }
+                    
+                }
+            }
+            
+            public void SwitchAllPlayersActionMaps()
+            {
+                foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
+                {
+                    _playerInput.SwitchCurrentActionMap("Player");
+                }
+            }
 
             #endregion
 
@@ -61,6 +89,21 @@ namespace UnityCore
                 audioMixer.SetFloat("Volume", DataController.instance.MasterVolume);
                 audioMixer.SetFloat("MusicVolume", DataController.instance.MusicVolume);
                 audioMixer.SetFloat("SFXVolume",  DataController.instance.SfxVolume);
+            }
+            
+            private void PauseGame()
+            {
+                Time.timeScale = 0;
+                PageController.instance.TurnPageOn(PageType.PauseMenu);
+                isGamePaused = true;
+            }
+
+            private void UnpauseGame()
+            {
+                PageController.instance.TurnPageOff(PageType.PauseMenu);
+                Time.timeScale = 1;
+                isGamePaused = false;
+                if(MatchController.instance.hasMatchStarted) SwitchAllPlayersActionMaps();
             }
 
             #endregion

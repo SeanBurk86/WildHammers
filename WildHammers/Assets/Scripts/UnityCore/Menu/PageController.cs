@@ -56,6 +56,7 @@ namespace UnityCore
 
             public void TurnPageOff(PageType _off, PageType _on = PageType.None, bool _waitForExit= false)
             {
+                Log("Trying to turn off page "+_off);
                 if (_off == PageType.None) return;
                 if (!PageExists(_off))
                 {

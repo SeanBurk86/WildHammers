@@ -39,7 +39,9 @@ namespace WildHammers
 
             private void Start()
             {
-                m_RequiredNumberOfBalls = GameRoundController.instance.matchInfo.numberOfBalls;
+                if (GameRoundController.instance != null)
+                    m_RequiredNumberOfBalls = GameRoundController.instance.matchInfo.numberOfBalls;
+                else m_RequiredNumberOfBalls = 5;
                 
                 Debug.Log("ReqnumBalls: "+m_RequiredNumberOfBalls);
             }
