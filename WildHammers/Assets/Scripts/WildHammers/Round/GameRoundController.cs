@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityCore.Audio;
@@ -30,7 +31,10 @@ namespace WildHammers
             private List<PlayerInput> m_PlayerInputs;
             private float m_RoundTimer;
             private TMP_Text m_RoundTimerUI;
+            private bool m_IsCountingDown;
+            private float m_CountdownTimer;
 
+            [SerializeField] private TMP_Text m_CountdownText;
             [SerializeField] private Transform[] hammerStartingPositions;
             [SerializeField] private GameObject firstSelectedInVictoryMenu;
 
@@ -69,9 +73,17 @@ namespace WildHammers
                     AudioController.instance.PlayAudio(AudioType.SFX_08);
                 }
 
+                private void OnEnable()
+                {
+                    //Do the match countdown
+                    m_IsCountingDown = true;
+                    m_CountdownTimer = 5f;
+                    m_CountdownText.gameObject.SetActive(true);
+                }
+
                 private void Update()
                 {
-                    if (!GameController.instance.isGamePaused)
+                    if (!GameController.instance.isGamePaused && !m_IsCountingDown)
                     {
                         if (!isRoundOver)
                         {
@@ -89,6 +101,20 @@ namespace WildHammers
                             EndRound();
                         }
                         
+                    }
+
+                    if (m_IsCountingDown)
+                    {
+                        m_CountdownTimer -= Time.deltaTime;
+                        if((int) m_CountdownTimer <  Int32.Parse(m_CountdownText.text)) AudioController.instance.PlayAudio(AudioType.SFX_11);
+                        string _countDownString = ((int) m_CountdownTimer).ToString();
+                        m_CountdownText.text = _countDownString;
+                        if (m_CountdownTimer <= 0f)
+                        {
+                            m_IsCountingDown = false;
+                            m_CountdownText.gameObject.SetActive(false);
+                        }
+
                     }
                 }
 
