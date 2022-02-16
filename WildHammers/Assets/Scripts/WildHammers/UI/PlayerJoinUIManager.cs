@@ -1,5 +1,4 @@
 
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -31,13 +30,9 @@ namespace WildHammers
                     }
                 }
 
-                private void Start()
-                {
-                    PlayerJoinController.instance.PlayerJoinedGame += PlayerJoinedGame;
-                }
-
                 private void OnEnable()
                 {
+                    PlayerJoinController.instance.PlayerJoinedGame += PlayerJoinedGame;
                     foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
                     {
                         SetupJoinPlayerInputPanel(_playerInput);
@@ -61,24 +56,25 @@ namespace WildHammers
 
                 private void PlayerJoinedGame(PlayerInput _playerInput)
                 {
+                    Debug.Log("PlayerUIManager Joined game action");
                     SetupJoinPlayerInputPanel(_playerInput);
                 }
 
                 private void SetupJoinPlayerInputPanel(PlayerInput _playerInput)
                 {
+                    Debug.Log("Calling setup join ui panel with player index "+_playerInput.playerIndex);
                     playerJoinMenu.transform.GetChild(_playerInput.playerIndex).gameObject.SetActive(false);
-                    // This is a little ugly but the idea is
-                    // the JoinPanelUI will be a child to the Player object the first time through
-                    // and a child of the Player Join Page afterwards
+
+                    float _joinPanelwidth = .25f;
                     if (_playerInput.transform.GetComponentInChildren<JoinPanelUI>() != null)
                     {
                         Transform _joinPlayerUI = _playerInput.transform.GetComponentInChildren<JoinPanelUI>().transform;
                         _joinPlayerUI.SetParent(playerJoinMenu.transform, false);
                         if (_playerInput.playerIndex > 0)
                         {
-                            float _panelXOffest = _playerInput.playerIndex * .25f;
+                            float _panelXOffest = _playerInput.playerIndex * _joinPanelwidth;
                             _joinPlayerUI.GetComponent<RectTransform>().anchorMin = new Vector2(_panelXOffest, 0);
-                            _joinPlayerUI.GetComponent<RectTransform>().anchorMax = new Vector2(_panelXOffest + .25f, 1);
+                            _joinPlayerUI.GetComponent<RectTransform>().anchorMax = new Vector2(_panelXOffest + _joinPanelwidth, 1);
                         }
                         _playerInput.transform.GetComponent<MultiplayerEventSystem>()
                             .SetSelectedGameObject(_joinPlayerUI.GetComponent<JoinPanelUI>().firstSelectedInitialsButton); 

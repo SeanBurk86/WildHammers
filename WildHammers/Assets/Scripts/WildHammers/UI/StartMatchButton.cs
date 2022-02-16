@@ -1,10 +1,8 @@
 
-using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
-using WildHammers.Player;
 
 namespace WildHammers
 {
@@ -12,11 +10,15 @@ namespace WildHammers
     {
         public class StartMatchButton : Button
         {
+            [SerializeField] private GameObject menuButtons, matchChoiceButtons, twoOnTwoButton;
             public override void OnSubmit(BaseEventData eventData)
             {
-                Debug.Log("Hitting the Start a match Button with player "+eventData.currentInputModule.transform.gameObject.GetComponent<PlayerInput>().playerIndex);
                 base.OnSubmit(eventData);
-                PageController.instance.TurnPageOff(PageType.StartMenu, PageType.PlayerJoin);
+                BaseInput _playerInput = eventData.currentInputModule.input;
+                menuButtons.SetActive(false);
+                matchChoiceButtons.SetActive(true);
+                MultiplayerEventSystem _multiplayerEventSystem = _playerInput.transform.GetComponent<MultiplayerEventSystem>();
+                _multiplayerEventSystem.SetSelectedGameObject(twoOnTwoButton);
             }
         }
         

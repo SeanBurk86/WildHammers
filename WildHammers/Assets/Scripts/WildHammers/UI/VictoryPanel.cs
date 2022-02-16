@@ -1,10 +1,13 @@
 
+using System;
+using TMPro;
 using UnityCore.Audio;
 using UnityCore.Menu;
 using UnityCore.Scene;
 using UnityEngine;
 using WildHammers.Match;
 using WildHammers.Player;
+using WildHammers.Round;
 using AudioType = UnityCore.Audio.AudioType;
 
 namespace WildHammers
@@ -13,6 +16,16 @@ namespace WildHammers
     {
         public class VictoryPanel : MonoBehaviour
         {
+            [SerializeField] private TMP_Text m_VictoryMsg;
+
+            private void OnEnable()
+            {
+                string _resultText;
+                if (GameRoundController.instance.winningTeam == "Draw") _resultText = "Draw";
+                else _resultText = "Victory!!! \n"+GameRoundController.instance.winningTeam;
+                m_VictoryMsg.text = _resultText;
+            }
+
             public void RestartMatch()
             {
                 SceneController.instance.ReloadScene();
@@ -25,6 +38,7 @@ namespace WildHammers
                 MatchController.instance.areSettingsAccepted = false;
                 MatchController.instance.FlushMatchSettings();
                 AudioController.instance.PlayAudio(AudioType.ST_01);
+                PageController.instance.TurnOffAllPages();
                 SceneController.instance.Load(SceneType.MainMenu,false,PageType.Loading);
             }
 
@@ -36,6 +50,7 @@ namespace WildHammers
                 MatchController.instance.areTeamsPicked = false;
                 MatchController.instance.FlushTeamSettings();
                 AudioController.instance.PlayAudio(AudioType.ST_01);
+                PageController.instance.TurnOffAllPages();
                 SceneController.instance.Load(SceneType.MainMenu,false,PageType.Loading);
             }
 

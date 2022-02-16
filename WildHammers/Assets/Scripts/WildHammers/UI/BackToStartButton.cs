@@ -21,9 +21,11 @@ namespace WildHammers
                 {
                     PageController.instance.TurnPageOff(PageType.ConfigSettings, PageType.StartMenu);
                 }
-                else if (PageController.instance.PageIsOn(PageType.PauseMenu))
+                else if (PageController.instance.PageIsOn(PageType.PauseMenu) 
+                         || PageController.instance.PageIsOn(PageType.Victory))
                 {
                     GameController.instance.HandlePauseInput();
+                    PageController.instance.TurnOffAllPages();
                     SceneController.instance.Load(SceneType.MainMenu,false,PageType.Loading);
                     MatchController.instance.hasMatchStarted = false;
                     MatchController.instance.areSettingsSet = false;

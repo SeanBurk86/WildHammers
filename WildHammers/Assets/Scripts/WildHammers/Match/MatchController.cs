@@ -54,18 +54,35 @@ namespace WildHammers
                 {
                     if (!hasMatchStarted)
                     {
-                        if (teamWest != null)
+                        if (PlayerJoinController.instance.maxPlayerCount == 4)
                         {
-                            player1WestText.text = teamWest.teamRoster[0].playerInitials+" the "+teamWest.teamRoster[0].zodiacSign;
-                            player2WestText.text = teamWest.teamRoster[1].playerInitials+" the "+teamWest.teamRoster[1].zodiacSign;
-                            teamWestPanel.sprite = teamWest.teamInfo.livery;
+                            if (teamWest != null)
+                            {
+                                player1WestText.text = teamWest.teamRoster[0].playerInitials+" the "+teamWest.teamRoster[0].zodiacSign;
+                                player2WestText.text = teamWest.teamRoster[1].playerInitials+" the "+teamWest.teamRoster[1].zodiacSign;
+                                teamWestPanel.sprite = teamWest.teamInfo.livery;
+                            }
+                            
+                            if (teamEast != null)
+                            {
+                                player1EastText.text = teamEast.teamRoster[0].playerInitials+" the "+teamEast.teamRoster[0].zodiacSign;
+                                player2EastText.text = teamEast.teamRoster[1].playerInitials+" the "+teamEast.teamRoster[1].zodiacSign;
+                                teamEastPanel.sprite = teamEast.teamInfo.livery;
+                            }
                         }
-                        
-                        if (teamEast != null)
+                        else
                         {
-                            player1EastText.text = teamEast.teamRoster[0].playerInitials+" the "+teamEast.teamRoster[0].zodiacSign;
-                            player2EastText.text = teamEast.teamRoster[1].playerInitials+" the "+teamEast.teamRoster[1].zodiacSign;
-                            teamEastPanel.sprite = teamEast.teamInfo.livery;
+                            if (teamWest != null)
+                            {
+                                player1WestText.text = teamWest.teamRoster[0].playerInitials+" the "+teamWest.teamRoster[0].zodiacSign;
+                                teamWestPanel.sprite = teamWest.teamInfo.livery;
+                            }
+                            
+                            if (teamEast != null)
+                            {
+                                player1EastText.text = teamEast.teamRoster[0].playerInitials+" the "+teamEast.teamRoster[0].zodiacSign;
+                                teamEastPanel.sprite = teamEast.teamInfo.livery;
+                            }
                         }
 
                         if (!areTeamsPicked && !PageController.instance.PageIsOn(PageType.TeamSelect)

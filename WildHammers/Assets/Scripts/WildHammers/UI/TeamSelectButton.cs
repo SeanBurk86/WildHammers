@@ -57,15 +57,29 @@ namespace WildHammers
             public override void OnSubmit(BaseEventData eventData)
             {
                 base.OnSubmit(eventData);
-                if (selectingPlayerInfos.Count == 2 && buttonHasSubmitted == false)
+                if ((selectingPlayerInfos.Count == 2 && buttonHasSubmitted == false) 
+                    || (PlayerJoinController.instance.maxPlayerCount == 2 && buttonHasSubmitted == false) )
                 {
-                    PlayerInfo[] _roster = TeamController.instance.MatchPlayers(selectingPlayerInfos[0], selectingPlayerInfos[1]);
+                    PlayerInfo[] _roster;
+                    if (PlayerJoinController.instance.maxPlayerCount == 4)
+                        _roster = TeamController.instance.MatchPlayers(selectingPlayerInfos[0],
+                            selectingPlayerInfos[1]);
+                    else _roster = new PlayerInfo[] {selectingPlayerInfos[0]};
                     TeamController.MatchTeam _matchTeam = TeamController.instance.MatchTeamToPlayers(team, _roster);
                     MatchController.instance.AddTeamToMatch(_matchTeam);
+                    GameObject selectingGameObject = eventData.currentInputModule.transform.gameObject;
+                    PlayerInfo selectingPlayerInfo = selectingGameObject.GetComponent<PlayerInfo>();
+                    int selectingGOPlayerIndex = selectingGameObject.GetComponent<PlayerInput>().playerIndex;
+                    playerSelectIDUIs[selectingGOPlayerIndex].gameObject.GetComponentInChildren<TMP_Text>().text 
+                        = selectingPlayerInfo.playerInitials;
+                    playerSelectIDUIs[selectingGOPlayerIndex].SetActive(true);
                     interactable = false;
-                    Navigation noneModeNav = new Navigation();
-                    noneModeNav.mode = Navigation.Mode.None;
-                    navigation = noneModeNav;
+                    if (PlayerJoinController.instance.maxPlayerCount == 4)
+                    {
+                        Navigation noneModeNav = new Navigation();
+                        noneModeNav.mode = Navigation.Mode.None;
+                        navigation = noneModeNav;
+                    }
                     buttonHasSubmitted = true;
                 }
             }

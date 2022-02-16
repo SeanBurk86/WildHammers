@@ -20,8 +20,11 @@ namespace WildHammers
         public class GameRoundController : MonoBehaviour
         {
             public static GameRoundController instance;
+            
+            public static readonly string DRAW = "Draw";
 
             public MatchInfo matchInfo;
+            public string winningTeam = "";
 
 
             private List<PlayerInput> m_PlayerInputs;
@@ -110,17 +113,20 @@ namespace WildHammers
             {
                 //TODO clean this up with for loops
                 GameObject _teamWestPlayer1Hammer = matchInfo.teamWest.teamRoster[0].transform.GetChild(0).gameObject;
-                GameObject _teamWestPlayer2Hammer = matchInfo.teamWest.teamRoster[1].transform.GetChild(0).gameObject;
-                GameObject _teamEastPlayer1Hammer = matchInfo.teamEast.teamRoster[0].transform.GetChild(0).gameObject;
-                GameObject _teamEastPlayer2Hammer = matchInfo.teamEast.teamRoster[1].transform.GetChild(0).gameObject;
                 _teamWestPlayer1Hammer.transform.position = hammerStartingPositions[0].position;
                 _teamWestPlayer1Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
-                _teamWestPlayer2Hammer.transform.position = hammerStartingPositions[2].position;
-                _teamWestPlayer2Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
+                GameObject _teamEastPlayer1Hammer = matchInfo.teamEast.teamRoster[0].transform.GetChild(0).gameObject;
                 _teamEastPlayer1Hammer.transform.position = hammerStartingPositions[1].position;
                 _teamEastPlayer1Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
-                _teamEastPlayer2Hammer.transform.position = hammerStartingPositions[3].position;
-                _teamEastPlayer2Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
+                if (PlayerJoinController.instance.maxPlayerCount == 4)
+                {
+                    GameObject _teamWestPlayer2Hammer = matchInfo.teamWest.teamRoster[1].transform.GetChild(0).gameObject;
+                    _teamWestPlayer2Hammer.transform.position = hammerStartingPositions[2].position;
+                    _teamWestPlayer2Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
+                    GameObject _teamEastPlayer2Hammer = matchInfo.teamEast.teamRoster[1].transform.GetChild(0).gameObject;
+                    _teamEastPlayer2Hammer.transform.position = hammerStartingPositions[3].position;
+                    _teamEastPlayer2Hammer.GetComponent<HammerController>().ResetChildrenPositionAndRotation();
+                }
             }
 
             private void ActivateHammers()
@@ -152,6 +158,18 @@ namespace WildHammers
             private void EndRound()
             {
                 isRoundOver = true;
+                if (ScoreController.instance.westScore > ScoreController.instance.eastScore)
+                {
+                    winningTeam = matchInfo.teamWest.teamInfo.city + " " + matchInfo.teamWest.teamInfo.name;
+                }
+                else if (ScoreController.instance.westScore < ScoreController.instance.eastScore)
+                {
+                    winningTeam = matchInfo.teamEast.teamInfo.city + " " + matchInfo.teamEast.teamInfo.name;
+                }
+                else
+                {
+                    winningTeam = DRAW;
+                }
                 AddStatsToRecords();
                 AudioController.instance.PlayAudio(AudioType.SFX_04);
                 AudioController.instance.PlayAudio(AudioType.ST_03);

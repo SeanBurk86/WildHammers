@@ -1,5 +1,4 @@
 
-using System;
 using System.Collections.Generic;
 using UnityCore.Game;
 using UnityCore.Menu;
@@ -26,6 +25,8 @@ namespace WildHammers
             public event System.Action<PlayerInput> PlayerJoinedGame;
             public event System.Action<PlayerInput> PlayerLeftGame;
 
+            public int maxPlayerCount;
+
             private int readyCount;
 
             #region Unity Functions
@@ -42,6 +43,7 @@ namespace WildHammers
                 }
 
                 areAllPlayersEntered = false;
+                maxPlayerCount = 2;
             }
 
             private void Update()
@@ -50,7 +52,7 @@ namespace WildHammers
                 {
                     if (!MatchController.instance.hasMatchStarted)
                     {
-                        if (readyCount >= PlayerInputManager.instance.maxPlayerCount && !PageController.instance.PageIsOn(PageType.TeamSelectRosterPanel))
+                        if (readyCount >= maxPlayerCount && !PageController.instance.PageIsOn(PageType.TeamSelectRosterPanel))
                         {
                             areAllPlayersEntered = true;
                             PageController.instance.TurnPageOff(PageType.PlayerJoin);
@@ -62,6 +64,13 @@ namespace WildHammers
                                  && !PageController.instance.PageIsOn(PageType.TeamSelectRosterPanel)
                                  && !PageController.instance.PageIsOn(PageType.TeamSelect))
                         {
+                            if (maxPlayerCount == 2)
+                            {
+                                if (playerList.Find(x => x.playerIndex == 3))
+                                    UnregisterPlayer(playerList.Find(x => x.playerIndex == 3));
+                                if (playerList.Find(x => x.playerIndex == 4)) 
+                                    UnregisterPlayer(playerList.Find(x => x.playerIndex == 4));
+                            }
                             PageController.instance.TurnPageOn(PageType.PlayerJoin);
                         }
                     }
@@ -125,15 +134,21 @@ namespace WildHammers
                 }
             }
     
-            private void OnPlayerLeft(PlayerInput playerInput)
+            private void OnPlayerLeft(PlayerInput _playerInput)
             {
+                UnregisterPlayer(_playerInput);
             }
     
             private void JoinAction(InputAction.CallbackContext context)
             {
-                if (playerList.Count < PlayerInputManager.instance.maxPlayerCount)
+                if (playerList.Count < maxPlayerCount)
                 {
-                    PlayerInputManager.instance.JoinPlayerFromActionIfNotAlreadyJoined(context);
+                    var device = context.control.device;
+                    if (PlayerInput.FindFirstPairedToDevice(device) != null)
+                        return;
+
+                    Log("Joining player with index: "+playerList.Count);
+                    PlayerInputManager.instance.JoinPlayer(playerIndex: playerList.Count, pairWithDevice: device);
                 }
             }
     

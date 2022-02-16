@@ -41,6 +41,7 @@ namespace WildHammers
 
                 public void SetHammerColor(Color _color)
                 {
+                    Log("Calling set hammer color"+_color);
                     hammerColor = _color;
                 }
             
@@ -51,7 +52,7 @@ namespace WildHammers
 
             private void Awake()
             {
-                hammerColor = new Color(1, 1, 1, 1);
+                SetHammerColor(new Color(1, 1, 1, 1));
             }
 
             #endregion
