@@ -52,6 +52,11 @@ namespace WildHammers
                 matchChoiceButtons.SetActive(false);
                 startMenuButtons.SetActive(true);
             }
+            
+            public void QuitGame()
+            {
+                Application.Quit();
+            }
         }
     }
 }
