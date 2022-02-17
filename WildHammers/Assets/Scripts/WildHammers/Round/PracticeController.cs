@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityCore.Game;
 using UnityCore.Menu;
@@ -34,6 +35,11 @@ namespace WildHammers
                 ActivateHammers();
             }
 
+            private void OnDisable()
+            {
+                CleanUpRound();
+            }
+
             #endregion
 
             #region Private Functions
@@ -56,6 +62,15 @@ namespace WildHammers
                     }
                     _playerHammer.GetComponent<HammerController>().headTMPText.text = "---";
                     _playerHammer.SetActive(true);
+                }
+            }
+            
+            private void CleanUpRound()
+            {
+                foreach (PlayerInput _playerInput in m_PlayerInputs)
+                {
+                    GameObject _playerHammer = _playerInput.transform.GetComponentInChildren<HammerController>(true).transform.gameObject;
+                    _playerHammer.SetActive(false);
                 }
             }
 
