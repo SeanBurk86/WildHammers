@@ -88,7 +88,12 @@ namespace WildHammers
                         if (!isRoundOver)
                         {
                             m_RoundTimer -= Time.deltaTime;
-                            m_RoundTimerUI.text = ((int) m_RoundTimer).ToString();
+                            int _RoundTimerInt = (int) m_RoundTimer;
+                            if (_RoundTimerInt < 11 && _RoundTimerInt < Int32.Parse(m_RoundTimerUI.text))
+                            {
+                                AudioController.instance.PlayAudio(AudioType.SFX_11);
+                            }
+                            m_RoundTimerUI.text = _RoundTimerInt.ToString();
                         }
                         if (m_RoundTimer <= 0 && isRoundOver == false)
                         {
