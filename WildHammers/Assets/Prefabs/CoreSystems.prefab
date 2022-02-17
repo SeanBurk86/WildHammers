@@ -203,6 +203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: a88b3ff6e79d27542913723dfd84f3f3, type: 2}
   isGamePaused: 0
+  matchMusic: 1
+  victoryMusic: 0
 --- !u!114 &4316018145862231714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +239,8 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: 8acb48cfdf3b3ac4d9e5f6c73806bbcd, type: 3}
     - type: 2
       clip: {fileID: 8300000, guid: 01850640e0aba2342ba91fe67b462059, type: 3}
+    - type: 14
+      clip: {fileID: 8300000, guid: ba81ec9b16ea23640a4e71267895e37c, type: 3}
   - source: {fileID: 1749488848657428644}
     audio:
     - type: 3

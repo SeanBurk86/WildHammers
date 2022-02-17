@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using WildHammers.Match;
 using WildHammers.Player;
+using AudioType = UnityCore.Audio.AudioType;
 
 namespace UnityCore
 {
@@ -19,6 +20,9 @@ namespace UnityCore
             public AudioMixer audioMixer;
             
             public bool isGamePaused;
+
+            public AudioType matchMusic;
+            public AudioType victoryMusic;
             
             #region Unity Functions
 

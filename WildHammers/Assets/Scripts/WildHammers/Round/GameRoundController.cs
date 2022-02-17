@@ -69,7 +69,7 @@ namespace WildHammers
 
                 private void Start()
                 {
-                    AudioController.instance.PlayAudio(AudioType.ST_02,0.5f);
+                    AudioController.instance.PlayAudio(GameController.instance.matchMusic,0.5f);
                     AudioController.instance.PlayAudio(AudioType.SFX_08);
                 }
 

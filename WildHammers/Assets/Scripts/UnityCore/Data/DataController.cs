@@ -14,6 +14,7 @@ namespace UnityCore
             private static readonly string MUSIC_VOLUME = "musicvolume";
             private static readonly string SFX_VOLUME = "sfxvolume";
             private static readonly string TOTAL_GOALS_SUFFIX = "_totalgoals";
+            private static readonly string MATCH_MUSIC = "matchmusic";
             private static readonly int DEFAULT_INT = 0;
 
             #region Properties
@@ -52,6 +53,18 @@ namespace UnityCore
                 set
                 {
                     SaveInt(SFX_VOLUME, value);
+                }
+            }
+
+            public int MatchMusic
+            {
+                get
+                {
+                    return GetInt(MATCH_MUSIC);
+                }
+                set
+                {
+                    SaveInt(MATCH_MUSIC, value);
                 }
             }
 
