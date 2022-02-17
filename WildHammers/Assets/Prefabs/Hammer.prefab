@@ -4929,10 +4929,14 @@ PolygonCollider2D:
       - {x: -0.35, y: 0.28}
       - {x: -0.2, y: 0.4}
       - {x: -0.2, y: 2.26}
-      - {x: -1, y: 2.26}
-      - {x: -1, y: 3.53}
-      - {x: 1, y: 3.53}
-      - {x: 1, y: 2.26}
+      - {x: -1.1, y: 2.26}
+      - {x: -1, y: 2.3}
+      - {x: -1, y: 3.46}
+      - {x: -1.1, y: 3.54}
+      - {x: 1.1, y: 3.54}
+      - {x: 1, y: 3.46}
+      - {x: 1, y: 2.3}
+      - {x: 1.1, y: 2.26}
       - {x: 0.2, y: 2.26}
       - {x: 0.2, y: 0.4}
       - {x: 0.35, y: 0.28}
@@ -4951,7 +4955,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 23.090849
+  m_Mass: 23.284845
   m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -5511,7 +5515,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.01}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5522,7 +5526,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.37, y: 1}
+  m_Size: {x: 1.37, y: 1.03}
   m_EdgeRadius: 0
 --- !u!114 &3481130412004760614
 MonoBehaviour:
