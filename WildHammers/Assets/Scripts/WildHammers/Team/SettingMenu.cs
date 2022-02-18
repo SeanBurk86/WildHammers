@@ -40,7 +40,7 @@ namespace WildHammers
 
             private void SetMusicChoices()
             {
-                m_MatchMusicDisplayText.text = audioTitleLookupTable[DataController.instance.MatchMusic];
+                m_MatchMusicDisplayText.text = audioTitleLookupTable[DataController.instance.MatchMusic-1];
             }
 
             public void SetMasterVolume(float _volume)

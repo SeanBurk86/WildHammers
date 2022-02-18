@@ -95,7 +95,8 @@ namespace WildHammers
                             areTeamsPicked = true;
                             PageController.instance.TurnPageOff(PageType.TeamSelect, PageType.MatchSettings);
                         }
-                        else if (areTeamsPicked && !areSettingsSet && !areSettingsAccepted)
+                        else if (areTeamsPicked && !areSettingsSet && !areSettingsAccepted 
+                                 && !PageController.instance.PageIsOn(PageType.MatchSettings))
                         {
                             PageController.instance.TurnPageOn(PageType.MatchSettings);
                         }

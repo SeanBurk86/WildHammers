@@ -1,4 +1,5 @@
 
+using UnityCore.Game;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
@@ -14,6 +15,7 @@ namespace WildHammers
             public override void OnSubmit(BaseEventData eventData)
             {
                 base.OnSubmit(eventData);
+                GameController.instance.isHeadingToStart = false;
                 BaseInput _playerInput = eventData.currentInputModule.input;
                 menuButtons.SetActive(false);
                 matchChoiceButtons.SetActive(true);

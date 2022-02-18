@@ -86,11 +86,11 @@ namespace UnityCore
                 }
             }
 
-            public void TurnOffAllPages()
+            public void TurnOffAllPages(bool _waitForExit = false)
             {
                 foreach (Page _page in pages)
                 {
-                    TurnPageOff(_page.type);
+                    TurnPageOff(_page.type, _waitForExit: _waitForExit);
                 }
             }
 

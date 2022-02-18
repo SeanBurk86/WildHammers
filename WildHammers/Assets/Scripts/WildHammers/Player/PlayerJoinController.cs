@@ -62,7 +62,9 @@ namespace WildHammers
                                  && !PageController.instance.PageIsOn(PageType.StartMenu)
                                  && !PageController.instance.PageIsOn(PageType.ConfigSettings)
                                  && !PageController.instance.PageIsOn(PageType.TeamSelectRosterPanel)
-                                 && !PageController.instance.PageIsOn(PageType.TeamSelect))
+                                 && !PageController.instance.PageIsOn(PageType.TeamSelect)
+                                 && GameController.instance.isInitialInputReceived
+                                 && !GameController.instance.isHeadingToStart)
                         {
                             if (maxPlayerCount == 2)
                             {

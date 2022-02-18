@@ -1,6 +1,7 @@
 
 using System;
 using UnityCore.Audio;
+using UnityCore.Game;
 using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,12 +20,6 @@ namespace WildHammers
             [SerializeField] private GameObject matchChoiceButtons;
             [SerializeField] private GameObject startAMatchButton;
 
-            private bool isInitialInputReceived;
-
-            private void Awake()
-            {
-                isInitialInputReceived = false;
-            }
 
             private void Start()
             {
@@ -35,9 +30,9 @@ namespace WildHammers
 
             public void OnInitialInput(PlayerInput _playerInput)
             {
-                if (!isInitialInputReceived)
+                if (!GameController.instance.isInitialInputReceived)
                 {
-                    isInitialInputReceived = true;
+                    GameController.instance.isInitialInputReceived = true;
                     startPrompt.SetActive(false);
                     startMenuButtons.SetActive(true);
                     MultiplayerEventSystem _multiplayerEventSystem = _playerInput.transform.GetComponent<MultiplayerEventSystem>();

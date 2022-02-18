@@ -17,6 +17,7 @@ namespace WildHammers
             public override void OnSubmit(BaseEventData eventData)
             {
                 base.OnSubmit(eventData);
+                GameController.instance.isHeadingToStart = true;
                 if (PageController.instance.PageIsOn(PageType.ConfigSettings))
                 {
                     PageController.instance.TurnPageOff(PageType.ConfigSettings, PageType.StartMenu);

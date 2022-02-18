@@ -19,7 +19,7 @@ namespace UnityCore
             
             public AudioMixer audioMixer;
             
-            public bool isGamePaused;
+            public bool isGamePaused, isInitialInputReceived, isHeadingToStart;
 
             public AudioType matchMusic;
             public AudioType victoryMusic;
@@ -36,7 +36,8 @@ namespace UnityCore
                 {
                     Destroy(gameObject);
                 }
-                
+                isInitialInputReceived = false;
+                isHeadingToStart = true;
             }
 
             private void Start()
