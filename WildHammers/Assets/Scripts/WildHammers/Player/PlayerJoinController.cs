@@ -55,8 +55,7 @@ namespace WildHammers
                         if (readyCount >= maxPlayerCount && !PageController.instance.PageIsOn(PageType.TeamSelectRosterPanel))
                         {
                             areAllPlayersEntered = true;
-                            PageController.instance.TurnPageOff(PageType.PlayerJoin);
-                            PageController.instance.TurnPageOn(PageType.TeamSelectRosterPanel);
+                            PageController.instance.TurnPageOff(PageType.PlayerJoin, PageType.TeamSelectRosterPanel);
                         } 
                         else if (!PageController.instance.PageIsOn(PageType.PlayerJoin) 
                                  && !PageController.instance.PageIsOn(PageType.StartMenu)

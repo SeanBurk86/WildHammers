@@ -20,6 +20,7 @@ namespace UnityCore
             SFX_10,
             SFX_11,
             ST_04,
+            ST_05,
             none
         }
     }

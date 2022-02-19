@@ -21,6 +21,7 @@ namespace WildHammers
                 if (PageController.instance.PageIsOn(PageType.ConfigSettings))
                 {
                     PageController.instance.TurnPageOff(PageType.ConfigSettings, PageType.StartMenu);
+                    AudioController.instance.PlayAudio(AudioType.ST_01);
                 }
                 else if (PageController.instance.PageIsOn(PageType.PauseMenu) 
                          || PageController.instance.PageIsOn(PageType.Victory))

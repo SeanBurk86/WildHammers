@@ -24,7 +24,7 @@ namespace WildHammers
             private void Start()
             {
                 AudioController.instance.PlayAudio(AudioType.SFX_08);
-                AudioController.instance.PlayAudio(AudioType.ST_01,1f,0.5f);
+                AudioController.instance.PlayAudio(AudioType.ST_05,1f,0.5f);
             }
 
 
