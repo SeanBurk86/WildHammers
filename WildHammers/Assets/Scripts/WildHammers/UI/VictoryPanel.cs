@@ -63,6 +63,7 @@ namespace WildHammers
                 MatchController.instance.FlushTeamSettings();
                 AudioController.instance.PlayAudio(AudioType.ST_01);
                 PlayerJoinController.instance.ResetJoinPanel();
+                PageController.instance.TurnOffAllPages();
                 SceneController.instance.Load(SceneType.MainMenu,false,PageType.Loading);
             }
         }
