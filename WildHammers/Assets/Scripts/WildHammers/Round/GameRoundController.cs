@@ -8,6 +8,7 @@ using UnityCore.Game;
 using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using WildHammers.GameplayObjects;
 using WildHammers.Match;
 using WildHammers.Player;
 using AudioType = UnityCore.Audio.AudioType;
@@ -27,7 +28,7 @@ namespace WildHammers
             public MatchInfo matchInfo;
             public string winningTeam = "";
 
-
+            private GoalType m_WinningSide;
             private List<PlayerInput> m_PlayerInputs;
             private float m_RoundTimer;
             private TMP_Text m_RoundTimerUI;
@@ -192,14 +193,17 @@ namespace WildHammers
                 if (ScoreController.instance.westScore > ScoreController.instance.eastScore)
                 {
                     winningTeam = matchInfo.teamWest.teamInfo.city + " " + matchInfo.teamWest.teamInfo.name;
+                    m_WinningSide = GoalType.WEST;
                 }
                 else if (ScoreController.instance.westScore < ScoreController.instance.eastScore)
                 {
                     winningTeam = matchInfo.teamEast.teamInfo.city + " " + matchInfo.teamEast.teamInfo.name;
+                    m_WinningSide = GoalType.EAST;
                 }
                 else
                 {
                     winningTeam = DRAW;
+                    m_WinningSide = GoalType.None;
                 }
                 AddStatsToRecords();
                 AudioController.instance.PlayAudio(AudioType.SFX_04);
@@ -219,12 +223,65 @@ namespace WildHammers
 
             private void AddStatsToRecords()
             {
+                TallyGoalStats();
+                TallyWinsAndLosses();
+            }
+
+            private void TallyGoalStats()
+            {
                 foreach (var _entry in ScoreController.instance.playerToGoalsScoredTable)
                 {
                     DataController.instance.IncrementPlayerTotalGoals(_entry.Key, _entry.Value);
                 }
+
+                foreach (var _entry in ScoreController.instance.safetyGoalsScoredTable)
+                {
+                    DataController.instance.IncrementPlayerGoalsScoredOnSelf(_entry.Key, _entry.Value);
+                }
+
+                foreach (var _entry in ScoreController.instance.goalsForTeamScored)
+                {
+                    DataController.instance.IncrementPlayerGoalsScoredForTeam(_entry.Key, _entry.Value);
+                }
             }
 
+            private void TallyWinsAndLosses()
+            {
+                if (m_WinningSide == GoalType.WEST)
+                {
+                    foreach (PlayerInfo _playerInfo in matchInfo.teamWest.teamRoster)
+                    {
+                        DataController.instance.IncrementPlayerMatchesWon(_playerInfo.GetID());
+                    }
+
+                    foreach (PlayerInfo _playerInfo in matchInfo.teamEast.teamRoster)
+                    {
+                        DataController.instance.IncrementPlayerMatchesLost(_playerInfo.GetID());
+                    }
+                }
+                else if (m_WinningSide == GoalType.EAST)
+                {
+                    foreach (PlayerInfo _playerInfo in matchInfo.teamEast.teamRoster)
+                    {
+                        DataController.instance.IncrementPlayerMatchesWon(_playerInfo.GetID());
+                    }
+                    foreach (PlayerInfo _playerInfo in matchInfo.teamWest.teamRoster)
+                    {
+                        DataController.instance.IncrementPlayerMatchesLost(_playerInfo.GetID());
+                    }
+                }
+                else
+                {
+                    foreach (PlayerInfo _playerInfo in matchInfo.teamEast.teamRoster)
+                    {
+                        DataController.instance.IncrementPlayerMatchesDrawn(_playerInfo.GetID());
+                    }
+                    foreach (PlayerInfo _playerInfo in matchInfo.teamWest.teamRoster)
+                    {
+                        DataController.instance.IncrementPlayerMatchesDrawn(_playerInfo.GetID());
+                    }
+                }
+            }
 
             #endregion
         }

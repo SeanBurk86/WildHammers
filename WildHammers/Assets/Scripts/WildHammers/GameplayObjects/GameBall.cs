@@ -30,7 +30,7 @@ namespace WildHammers
                     || _other.transform.gameObject.CompareTag("PlayerHammer"))
                 {
                     PlayerInfo _playerInfo = _other.transform.parent.parent.gameObject.GetComponent<PlayerInfo>();
-                    lastPlayerTouched =  _playerInfo.playerInitials + _playerInfo.zodiacSign;
+                    lastPlayerTouched =  _playerInfo.GetID();
                 }
                 else if (_other.transform.gameObject.CompareTag("ArenaWall"))
                 {

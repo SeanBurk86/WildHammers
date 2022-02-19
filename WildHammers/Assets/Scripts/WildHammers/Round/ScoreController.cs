@@ -26,7 +26,7 @@ namespace WildHammers
             
             [SerializeField] private GameObject firstSelectedInVictoryMenu;
 
-            public Dictionary<string, int> playerToGoalsScoredTable;
+            public Dictionary<string, int> playerToGoalsScoredTable, safetyGoalsScoredTable, goalsForTeamScored;
 
             #region Unity Functions
 
@@ -42,6 +42,8 @@ namespace WildHammers
                 }
 
                 playerToGoalsScoredTable = new Dictionary<string, int>();
+                safetyGoalsScoredTable = new Dictionary<string, int>();
+                goalsForTeamScored = new Dictionary<string, int>();
             }
 
             private void Update()
@@ -67,6 +69,30 @@ namespace WildHammers
                 {
                     eastScore += _points;
                 }
+                
+                if (_goal == GoalType.WEST)
+                {
+                    foreach (PlayerInfo _playerInfo in GameRoundController.instance.matchInfo.teamEast.teamRoster)
+                    {
+                        if (_lastTouchedPlayer == _playerInfo.GetID()) AddToSafetyGoalsTable(_lastTouchedPlayer);
+                    }
+                    foreach (PlayerInfo _playerInfo in GameRoundController.instance.matchInfo.teamWest.teamRoster)
+                    {
+                        if (_lastTouchedPlayer == _playerInfo.GetID()) AddToGoalsForTeamTable(_lastTouchedPlayer);
+                    }
+                }
+                else
+                {
+                    foreach (PlayerInfo _playerInfo in GameRoundController.instance.matchInfo.teamWest.teamRoster)
+                    {
+                        if (_lastTouchedPlayer == _playerInfo.GetID()) AddToSafetyGoalsTable(_lastTouchedPlayer);
+                    }
+                    foreach (PlayerInfo _playerInfo in GameRoundController.instance.matchInfo.teamEast.teamRoster)
+                    {
+                        if (_lastTouchedPlayer == _playerInfo.GetID()) AddToGoalsForTeamTable(_lastTouchedPlayer);
+                    }
+                }
+                
                 AddToGoalsScoredTable(_lastTouchedPlayer);
             }
 
@@ -103,6 +129,30 @@ namespace WildHammers
                 else
                 {
                     playerToGoalsScoredTable.Add(_lastTouchedPlayer, 1);
+                }
+            }
+            
+            private void AddToSafetyGoalsTable(string _lastTouchedPlayer)
+            {
+                if (safetyGoalsScoredTable.ContainsKey(_lastTouchedPlayer))
+                {
+                    safetyGoalsScoredTable[_lastTouchedPlayer] = safetyGoalsScoredTable[_lastTouchedPlayer] + 1;
+                }
+                else
+                {
+                    safetyGoalsScoredTable.Add(_lastTouchedPlayer, 1);
+                }
+            }
+            
+            private void AddToGoalsForTeamTable(string _lastTouchedPlayer)
+            {
+                if (goalsForTeamScored.ContainsKey(_lastTouchedPlayer))
+                {
+                    goalsForTeamScored[_lastTouchedPlayer] = goalsForTeamScored[_lastTouchedPlayer] + 1;
+                }
+                else
+                {
+                    goalsForTeamScored.Add(_lastTouchedPlayer, 1);
                 }
             }
 

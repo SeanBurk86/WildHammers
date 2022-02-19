@@ -69,9 +69,16 @@ namespace WildHammers
                     {
                         zodiacPanel.SetActive(false);
                         playerReadyText.gameObject.SetActive(true);
-                        playerReadyText.text = playerInfo.playerInitials + " the " + playerInfo.zodiacSign;
-                        playerPromptDisplay.text = "Total Goals Scored: " + 
-                                                   "\n" + DataController.instance.GetPlayerTotalGoals(playerInfo.playerInitials+playerInfo.zodiacSign);
+                        playerPromptDisplay.text = playerInfo.playerInitials + " the " + playerInfo.zodiacSign;
+                        playerReadyText.text = DataController.instance.GetPlayerMatchesWon(playerInfo.GetID())
+                                               +"-"+DataController.instance.GetPlayerMatchesLost(playerInfo.GetID())+"-"+
+                                               DataController.instance.GetPlayerMatchesDrawn(playerInfo.GetID())+
+                                               "\n"+"-----"+
+                                                "\n" +"Total Goals Scored: "+ DataController.instance.GetPlayerTotalGoals(playerInfo.GetID())
+                                               + "\n" 
+                                               + "\n" + "Goals Scored For Team: " + DataController.instance.GetPlayerGoalsScoredForTeam(playerInfo.GetID())
+                                               + "\n" 
+                                               + "\n" + "Goals Scored On Self: " + DataController.instance.GetPlayerGoalsScoredOnSelf(playerInfo.GetID());
                         joinPhaseText.text = "Here we go!";
                     }
                 }

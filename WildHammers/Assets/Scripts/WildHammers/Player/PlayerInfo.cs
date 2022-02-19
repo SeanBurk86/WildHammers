@@ -41,8 +41,12 @@ namespace WildHammers
 
                 public void SetHammerColor(Color _color)
                 {
-                    Log("Calling set hammer color"+_color);
                     hammerColor = _color;
+                }
+
+                public string GetID()
+                {
+                    return playerInitials + zodiacSign;
                 }
             
 
