@@ -186,7 +186,7 @@ namespace WildHammers
 
             private void Log(string _msg)
             {
-                if(debug)
+                if(!debug)
                     Debug.Log("[PlayerJoinController]: " + _msg);
             }
 

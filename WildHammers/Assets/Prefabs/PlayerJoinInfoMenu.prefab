@@ -4648,7 +4648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a181cb475f34534cb7f443afe5b2ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
   firstSelectedInitialsButton: {fileID: 5317763895769327566}
   playerInfo: {fileID: 0}
   submitInitialsButton: {fileID: 5317763896242444104}

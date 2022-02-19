@@ -56,13 +56,11 @@ namespace WildHammers
 
                 private void PlayerJoinedGame(PlayerInput _playerInput)
                 {
-                    Debug.Log("PlayerUIManager Joined game action");
                     SetupJoinPlayerInputPanel(_playerInput);
                 }
 
                 private void SetupJoinPlayerInputPanel(PlayerInput _playerInput)
                 {
-                    Debug.Log("Calling setup join ui panel with player index "+_playerInput.playerIndex);
                     playerJoinMenu.transform.GetChild(_playerInput.playerIndex).gameObject.SetActive(false);
 
                     float _joinPanelwidth = .25f;

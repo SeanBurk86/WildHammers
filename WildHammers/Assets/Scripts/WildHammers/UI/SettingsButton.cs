@@ -13,7 +13,6 @@ namespace WildHammers
         {
             public override void OnSubmit(BaseEventData eventData)
             {
-                Debug.Log("Hitting the Setting Button with player "+eventData.currentInputModule.transform.gameObject.GetComponent<PlayerInput>().playerIndex);
                 base.OnSubmit(eventData);
                 PageController.instance.TurnPageOff(PageType.StartMenu, PageType.ConfigSettings);
             }
