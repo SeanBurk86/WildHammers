@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityCore.Game;
 using UnityCore.Menu;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace WildHammers
         public class PracticeController : MonoBehaviour
         {
             public static PracticeController instance;
+            
+            [SerializeField] private Transform[] hammerStartingPositions;
             
             private List<PlayerInput> m_PlayerInputs;
 
@@ -32,6 +35,7 @@ namespace WildHammers
                 PageController.instance.TurnOffAllPages();
                 m_PlayerInputs = PlayerJoinController.instance.playerList;
                 GameController.instance.SwitchAllPlayersActionMaps();
+                SetHammerPositions();
                 ActivateHammers();
             }
 
@@ -62,6 +66,15 @@ namespace WildHammers
                     }
                     _playerHammer.GetComponent<HammerController>().headTMPText.text = "---";
                     _playerHammer.SetActive(true);
+                }
+            }
+            
+            private void SetHammerPositions()
+            {
+                for(int i=0;i<m_PlayerInputs.Count;i++)
+                {
+                    GameObject _hammer = m_PlayerInputs[i].transform.GetComponentInChildren<HammerController>(true).gameObject;
+                    _hammer.transform.position = hammerStartingPositions[i].position;
                 }
             }
             

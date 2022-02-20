@@ -2,6 +2,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using WildHammers.GameplayObjects;
 using WildHammers.Match;
 
 namespace WildHammers
@@ -18,7 +19,7 @@ namespace WildHammers
             
             public MatchInfo matchSettings;
 
-            [SerializeField] private TMP_Text m_NumberOfBallsInput, m_RoundTimeLimit, m_WinningScoreInput;
+            [SerializeField] private TMP_Text m_NumberOfBallsInput, m_RoundTimeLimit, m_WinningScoreInput, m_ArenaSelect;
 
             private void Awake()
             {
@@ -31,7 +32,8 @@ namespace WildHammers
                 matchSettings = new MatchInfo(null,null,
                     AcceptNumberOfBallsInPlay(m_NumberOfBallsInput.text),
                     AcceptWinningScore(m_WinningScoreInput.text),
-                    AcceptRoundTimeLimit(m_RoundTimeLimit.text));
+                    AcceptRoundTimeLimit(m_RoundTimeLimit.text),
+                    AcceptArena(m_ArenaSelect.text));
                 acceptSettingsEvent();
             }
 
@@ -48,6 +50,12 @@ namespace WildHammers
             private int AcceptWinningScore(string _winningScore)
             {
                 return Int32.Parse(_winningScore);
+            }
+
+            private ArenaType AcceptArena(string _arena)
+            {
+                ArenaType _selectArenaType = (ArenaType) Enum.Parse(typeof(ArenaType), _arena);
+                return _selectArenaType;
             }
 
             private void Log(string _msg)

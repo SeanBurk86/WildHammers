@@ -130,8 +130,8 @@ namespace WildHammers
                 {
                     CleanUpRound();
                 }
-                
-            #endregion
+
+                #endregion
 
             #region Public Functions
             

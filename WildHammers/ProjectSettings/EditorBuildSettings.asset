@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Practice.unity
     guid: 8e7a35397c665d543a288d02de8dc88d
+  - enabled: 1
+    path: Assets/Scenes/BendSinister.unity
+    guid: 2e1fe7197e39c224f927ba0b1ab07c45
   m_configObjects: {}

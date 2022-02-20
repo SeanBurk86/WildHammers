@@ -1,4 +1,5 @@
 
+using System;
 using TMPro;
 using UnityCore.Game;
 using UnityCore.Menu;
@@ -7,6 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
+using WildHammers.GameplayObjects;
 using WildHammers.Player;
 using WildHammers.ScreenFlow;
 using WildHammers.Team;
@@ -125,7 +127,8 @@ namespace WildHammers
 
             public void StartMatch()
             {
-                SceneController.instance.Load(SceneType.MainGame, false, PageType.Loading);
+                SceneType _selectedSceneType = ArenaTypeToSceneType(m_MatchSettingsPanel.matchSettings.arena);
+                SceneController.instance.Load(_selectedSceneType, false, PageType.Loading);
                 ScreenFlowController.instance.Flow(ScreenPoseType.Game, false);
                 ConfigureScoreBoard();
                 hasMatchStarted = true;
@@ -192,8 +195,15 @@ namespace WildHammers
             {
                 m_MatchInfo = new MatchInfo(teamWest, teamEast,
                     m_MatchSettingsPanel.matchSettings.numberOfBalls, m_MatchSettingsPanel.matchSettings.winningScore,
-                    m_MatchSettingsPanel.matchSettings.roundTimeLength);
+                    m_MatchSettingsPanel.matchSettings.roundTimeLength, m_MatchSettingsPanel.matchSettings.arena);
                 areSettingsSet = true;
+            }
+
+            private SceneType ArenaTypeToSceneType(ArenaType _arenaType)
+            {
+                string _arenaString = _arenaType.ToString();
+                SceneType _selectSceneType = (SceneType) Enum.Parse(typeof(SceneType), _arenaString);
+                return _selectSceneType;
             }
 
             private void Log(string _msg)

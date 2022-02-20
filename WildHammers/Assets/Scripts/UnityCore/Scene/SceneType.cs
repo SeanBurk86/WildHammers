@@ -8,7 +8,8 @@ namespace UnityCore
             None,
             MainGame,
             MainMenu,
-            Practice
+            Practice,
+            BendSinister
         }
     }
 }
