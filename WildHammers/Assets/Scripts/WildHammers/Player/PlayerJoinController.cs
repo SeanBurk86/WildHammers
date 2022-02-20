@@ -202,8 +202,7 @@ namespace WildHammers
 
             private void Log(string _msg)
             {
-                if(!debug)
-                    Debug.Log("[PlayerJoinController]: " + _msg);
+                if(debug) Debug.Log("[PlayerJoinController]: " + _msg);
             }
 
             #endregion
