@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 using WildHammers.GameplayObjects;
 using WildHammers.Match;
 using WildHammers.Player;
+using WildHammers.ScreenFlow;
 using AudioType = UnityCore.Audio.AudioType;
 
 
@@ -208,7 +209,7 @@ namespace WildHammers
                 AddStatsToRecords();
                 AudioController.instance.PlayAudio(AudioType.SFX_04);
                 AudioController.instance.PlayAudio(AudioType.ST_03);
-                PageController.instance.TurnPageOn(PageType.Victory);
+                ScreenFlowController.instance.Flow(ScreenPoseType.Victory);
             }
 
             private void Log(string _msg)

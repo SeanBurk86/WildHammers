@@ -1,10 +1,6 @@
 
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
-using WildHammers.Player;
 
 namespace UnityCore
 {
@@ -22,7 +18,6 @@ namespace UnityCore
             
             public PageType type;
             public bool useAnimation;
-            public GameObject firstSelectedElement;
             public string targetState { get; private set; }
 
             private Animator m_Animator;
@@ -45,15 +40,6 @@ namespace UnityCore
             private void OnEnable()
             {
                 CheckAnimatorIntegrity();
-                if (firstSelectedElement != null)
-                {
-                    foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
-                    {
-                        _playerInput.SwitchCurrentActionMap("UI");
-                        MultiplayerEventSystem _eventSystem = _playerInput.transform.GetComponent<MultiplayerEventSystem>();
-                        _eventSystem.SetSelectedGameObject(firstSelectedElement);
-                    }
-                }
             }
 
             #endregion

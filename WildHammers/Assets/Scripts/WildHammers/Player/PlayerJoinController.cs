@@ -4,7 +4,9 @@ using UnityCore.Game;
 using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using WildHammers.Match;
+using WildHammers.ScreenFlow;
 using WildHammers.UI;
 
 namespace WildHammers
@@ -18,6 +20,7 @@ namespace WildHammers
             public static PlayerJoinController instance;
             
             public List<PlayerInput> playerList = new List<PlayerInput>();
+            public List<MultiplayerEventSystem> multiplayerEventSystems = new List<MultiplayerEventSystem>();
 
             public bool areAllPlayersEntered;
             [SerializeField] private InputAction joinAction, leaveAction;
@@ -52,27 +55,16 @@ namespace WildHammers
                 {
                     if (!MatchController.instance.hasMatchStarted)
                     {
-                        if (readyCount >= maxPlayerCount && !PageController.instance.PageIsOn(PageType.TeamSelectRosterPanel))
+                        if (maxPlayerCount == 2)
+                        {
+                            if (playerList.Find(x => x.playerIndex == 3))
+                                UnregisterPlayer(playerList.Find(x => x.playerIndex == 3));
+                            if (playerList.Find(x => x.playerIndex == 4)) 
+                                UnregisterPlayer(playerList.Find(x => x.playerIndex == 4));
+                        }
+                        if (readyCount >= maxPlayerCount && !areAllPlayersEntered)
                         {
                             areAllPlayersEntered = true;
-                            PageController.instance.TurnPageOff(PageType.PlayerJoin, PageType.TeamSelectRosterPanel);
-                        } 
-                        else if (!PageController.instance.PageIsOn(PageType.PlayerJoin) 
-                                 && !PageController.instance.PageIsOn(PageType.StartMenu)
-                                 && !PageController.instance.PageIsOn(PageType.ConfigSettings)
-                                 && !PageController.instance.PageIsOn(PageType.TeamSelectRosterPanel)
-                                 && !PageController.instance.PageIsOn(PageType.TeamSelect)
-                                 && GameController.instance.isInitialInputReceived
-                                 && !GameController.instance.isHeadingToStart)
-                        {
-                            if (maxPlayerCount == 2)
-                            {
-                                if (playerList.Find(x => x.playerIndex == 3))
-                                    UnregisterPlayer(playerList.Find(x => x.playerIndex == 3));
-                                if (playerList.Find(x => x.playerIndex == 4)) 
-                                    UnregisterPlayer(playerList.Find(x => x.playerIndex == 4));
-                            }
-                            PageController.instance.TurnPageOn(PageType.PlayerJoin);
                         }
                     }
                         
@@ -99,6 +91,19 @@ namespace WildHammers
                 areAllPlayersEntered = false;
             }
 
+            public void AllSelectUIElement(GameObject _element)
+            {
+                foreach (PlayerInput _playerInput in playerList)
+                {
+                    _playerInput.SwitchCurrentActionMap("UI");
+                }
+
+                foreach (MultiplayerEventSystem _eventSystem in multiplayerEventSystems)
+                {
+                    _eventSystem.SetSelectedGameObject(_element);
+                }
+            }
+
             #endregion
 
             #region Private Functions
@@ -121,8 +126,9 @@ namespace WildHammers
             {
                 _playerInput.transform.SetParent(transform);
                 playerList.Add(_playerInput);
+                multiplayerEventSystems.Add(_playerInput.transform.GetComponent<MultiplayerEventSystem>());
 
-                if (PageController.instance.PageIsOn(PageType.StartMenu))
+                if (ScreenFlowController.instance.currentPoseType == ScreenPoseType.SplashStart)
                 {
                     Transform _startMenuPage = PageController.instance.pages[4].transform;
                     StartMenu _startMenu = _startMenuPage.GetComponentInChildren<StartMenu>();

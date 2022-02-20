@@ -1,9 +1,8 @@
 
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using WildHammers.Player;
 using WildHammers.Team;
 
@@ -15,14 +14,14 @@ namespace WildHammers
         {
             public TeamController.TeamInfo[] teamList;
             public GameObject teamButtonPrefab;
-            public List<PlayerInput> playerList;
+            public List<MultiplayerEventSystem> playerList;
             public GameObject buttonPanel;
             
 
             private void OnEnable()
             {
                 teamList = TeamController.instance.teams;
-                playerList = PlayerJoinController.instance.playerList;
+                playerList = PlayerJoinController.instance.multiplayerEventSystems;
                 ConfigureButtons();
             }
 
@@ -36,21 +35,25 @@ namespace WildHammers
 
             private void ConfigureButtons()
             {
-                //Clear buttons that may still be around
-
                 int playerListIncrementer = 0;
                 foreach (var _teamInfo in teamList)
                 {
-                    GameObject newButton = Instantiate(teamButtonPrefab, buttonPanel.transform);
-                    TeamSelectButton teamButton = newButton.GetComponent<TeamSelectButton>();
-                    teamButton.team = _teamInfo;
+                    GameObject _newButton = Instantiate(teamButtonPrefab, buttonPanel.transform);
+                    TeamSelectButton _teamButton = _newButton.GetComponent<TeamSelectButton>();
+                    _teamButton.team = _teamInfo;
                     if (playerListIncrementer < playerList.Count)
                     {
-                        PlayerInput _playerInput = playerList[playerListIncrementer];
-                        EventSystem _eventSystem = _playerInput.GetComponent<EventSystem>();
-                        _eventSystem.SetSelectedGameObject(teamButton.gameObject);
+                        EventSystem _eventSystem = playerList[playerListIncrementer];
+                        _eventSystem.SetSelectedGameObject(_teamButton.gameObject);
                         playerListIncrementer++;
                     }
+                }
+
+                while (playerListIncrementer < playerList.Count)
+                {
+                    EventSystem _eventSystem = playerList[playerListIncrementer];
+                    _eventSystem.SetSelectedGameObject(GetComponentInChildren<TeamSelectButton>().gameObject);
+                    playerListIncrementer++;
                 }
             }
             

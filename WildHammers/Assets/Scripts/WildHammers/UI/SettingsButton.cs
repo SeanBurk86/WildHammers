@@ -1,9 +1,7 @@
 
-using UnityCore.Menu;
-using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using WildHammers.ScreenFlow;
 
 namespace WildHammers
 {
@@ -14,7 +12,7 @@ namespace WildHammers
             public override void OnSubmit(BaseEventData eventData)
             {
                 base.OnSubmit(eventData);
-                PageController.instance.TurnPageOff(PageType.StartMenu, PageType.ConfigSettings);
+                ScreenFlowController.instance.Flow(ScreenPoseType.SoundSettings);
             }
         }
         

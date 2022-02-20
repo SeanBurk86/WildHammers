@@ -1,9 +1,9 @@
 
 using UnityCore.Menu;
 using UnityCore.Scene;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using WildHammers.ScreenFlow;
 
 namespace WildHammers
 {
@@ -15,6 +15,7 @@ namespace WildHammers
             {
                 base.OnSubmit(eventData);
                 SceneController.instance.Load(SceneType.Practice, false, PageType.Loading);
+                ScreenFlowController.instance.Flow(ScreenPoseType.Practice);
             }
         }
     }

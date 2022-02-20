@@ -132,7 +132,14 @@ namespace WildHammers
                         PlayerJoinController.instance.IncrementReadyCount();
                     }
                 }
-            
+
+                public void ClearPlayerInfo()
+                {
+                    hasSubmittedInitials = false;
+                    hasSubmittedZodiac = false;
+                    joinPhaseText.text = "Initials";
+                    playerPromptDisplay.text = "Enter your initials!";
+                }
 
             #endregion
 

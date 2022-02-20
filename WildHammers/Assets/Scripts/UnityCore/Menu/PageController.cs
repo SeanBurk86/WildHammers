@@ -1,6 +1,5 @@
 
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityCore
@@ -12,7 +11,6 @@ namespace UnityCore
             public static PageController instance;
 
             public bool debug;
-            public PageType entryPage;
             public Page[] pages;
 
             private Hashtable m_Pages;
@@ -113,6 +111,7 @@ namespace UnityCore
             {
                 while (_off.targetState != Page.FLAG_NONE)
                 {
+                    Log("Waiting for "+_off.type+" to exit");
                     yield return null;
                 }
                 
@@ -124,11 +123,6 @@ namespace UnityCore
                 instance = this;
                 m_Pages = new Hashtable();
                 RegisterAllPages();
-
-                if (entryPage != PageType.None)
-                {
-                    TurnPageOn((entryPage));
-                }
                 
                 DontDestroyOnLoad(gameObject);
             }

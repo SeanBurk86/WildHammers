@@ -1,12 +1,11 @@
 
-using System;
 using UnityCore.Audio;
 using UnityCore.Game;
-using UnityCore.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using WildHammers.Player;
+using WildHammers.ScreenFlow;
 using AudioType = UnityCore.Audio.AudioType;
 
 namespace WildHammers
@@ -17,15 +16,15 @@ namespace WildHammers
         {
             [SerializeField] private GameObject startPrompt;
             [SerializeField] private GameObject startMenuButtons;
-            [SerializeField] private GameObject matchChoiceButtons;
             [SerializeField] private GameObject startAMatchButton;
 
 
             private void Start()
             {
                 AudioController.instance.PlayAudio(AudioType.SFX_08);
-                AudioController.instance.PlayAudio(AudioType.ST_05,1f,0.5f);
+                AudioController.instance.PlayAudio(AudioType.ST_05, 1f);
             }
+            
 
 
             public void OnInitialInput(PlayerInput _playerInput)
@@ -43,9 +42,8 @@ namespace WildHammers
             public void SetMaxPlayers(int _maxPlayers)
             {
                 PlayerJoinController.instance.maxPlayerCount = _maxPlayers;
-                PageController.instance.TurnPageOff(PageType.StartMenu, PageType.PlayerJoin);
-                matchChoiceButtons.SetActive(false);
-                startMenuButtons.SetActive(true);
+                if(_maxPlayers == 4) ScreenFlowController.instance.Flow(ScreenPoseType.FourPlayerJoin);
+                else ScreenFlowController.instance.Flow(ScreenPoseType.TwoPlayerJoin);
             }
             
             public void QuitGame()

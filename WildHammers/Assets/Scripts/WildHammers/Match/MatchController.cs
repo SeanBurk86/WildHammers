@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 using WildHammers.Player;
+using WildHammers.ScreenFlow;
 using WildHammers.Team;
 using WildHammers.UI;
 
@@ -54,51 +55,12 @@ namespace WildHammers
                 {
                     if (!hasMatchStarted)
                     {
-                        if (PlayerJoinController.instance.maxPlayerCount == 4)
-                        {
-                            if (teamWest != null)
-                            {
-                                player1WestText.text = teamWest.teamRoster[0].playerInitials+" the "+teamWest.teamRoster[0].zodiacSign;
-                                player2WestText.text = teamWest.teamRoster[1].playerInitials+" the "+teamWest.teamRoster[1].zodiacSign;
-                                teamWestPanel.sprite = teamWest.teamInfo.livery;
-                            }
-                            
-                            if (teamEast != null)
-                            {
-                                player1EastText.text = teamEast.teamRoster[0].playerInitials+" the "+teamEast.teamRoster[0].zodiacSign;
-                                player2EastText.text = teamEast.teamRoster[1].playerInitials+" the "+teamEast.teamRoster[1].zodiacSign;
-                                teamEastPanel.sprite = teamEast.teamInfo.livery;
-                            }
-                        }
-                        else
-                        {
-                            if (teamWest != null)
-                            {
-                                player1WestText.text = teamWest.teamRoster[0].playerInitials+" the "+teamWest.teamRoster[0].zodiacSign;
-                                teamWestPanel.sprite = teamWest.teamInfo.livery;
-                            }
-                            
-                            if (teamEast != null)
-                            {
-                                player1EastText.text = teamEast.teamRoster[0].playerInitials+" the "+teamEast.teamRoster[0].zodiacSign;
-                                teamEastPanel.sprite = teamEast.teamInfo.livery;
-                            }
-                        }
+                        UpdateTeamRosterPanel();
 
-                        if (!areTeamsPicked && !PageController.instance.PageIsOn(PageType.TeamSelect)
-                                            && PlayerJoinController.instance.areAllPlayersEntered)
-                        {
-                            PageController.instance.TurnPageOn(PageType.TeamSelect);
-                        } 
-                        else if (teamWest != null && teamEast != null && !areTeamsPicked)
+                        if (teamWest != null && teamEast != null && !areTeamsPicked)
                         {
                             areTeamsPicked = true;
-                            PageController.instance.TurnPageOff(PageType.TeamSelect, PageType.MatchSettings);
-                        }
-                        else if (areTeamsPicked && !areSettingsSet && !areSettingsAccepted 
-                                 && !PageController.instance.PageIsOn(PageType.MatchSettings))
-                        {
-                            PageController.instance.TurnPageOn(PageType.MatchSettings);
+                            ScreenFlowController.instance.Flow(ScreenPoseType.MatchSettings, false);
                         }
                         else if (areTeamsPicked && !areSettingsSet && areSettingsAccepted)
                         {
@@ -108,9 +70,42 @@ namespace WildHammers
                         {
                             StartMatch();
                         }
-                        
                     }
                         
+                }
+            }
+
+            private void UpdateTeamRosterPanel()
+            {
+                if (PlayerJoinController.instance.maxPlayerCount == 4)
+                {
+                    if (teamWest != null)
+                    {
+                        player1WestText.text = teamWest.teamRoster[0].playerInitials + " the " + teamWest.teamRoster[0].zodiacSign;
+                        player2WestText.text = teamWest.teamRoster[1].playerInitials + " the " + teamWest.teamRoster[1].zodiacSign;
+                        teamWestPanel.sprite = teamWest.teamInfo.livery;
+                    }
+
+                    if (teamEast != null)
+                    {
+                        player1EastText.text = teamEast.teamRoster[0].playerInitials + " the " + teamEast.teamRoster[0].zodiacSign;
+                        player2EastText.text = teamEast.teamRoster[1].playerInitials + " the " + teamEast.teamRoster[1].zodiacSign;
+                        teamEastPanel.sprite = teamEast.teamInfo.livery;
+                    }
+                }
+                else
+                {
+                    if (teamWest != null)
+                    {
+                        player1WestText.text = teamWest.teamRoster[0].playerInitials + " the " + teamWest.teamRoster[0].zodiacSign;
+                        teamWestPanel.sprite = teamWest.teamInfo.livery;
+                    }
+
+                    if (teamEast != null)
+                    {
+                        player1EastText.text = teamEast.teamRoster[0].playerInitials + " the " + teamEast.teamRoster[0].zodiacSign;
+                        teamEastPanel.sprite = teamEast.teamInfo.livery;
+                    }
                 }
             }
 
@@ -130,8 +125,8 @@ namespace WildHammers
 
             public void StartMatch()
             {
-                PageController.instance.TurnOffAllPages();
                 SceneController.instance.Load(SceneType.MainGame, false, PageType.Loading);
+                ScreenFlowController.instance.Flow(ScreenPoseType.Game, false);
                 ConfigureScoreBoard();
                 hasMatchStarted = true;
             }

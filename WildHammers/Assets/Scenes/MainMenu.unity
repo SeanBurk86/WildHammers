@@ -263,7 +263,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.011764707, g: 0.9607844, b: 0.1254902, a: 0}
+  m_BackGroundColor: {r: 0.14117648, g: 0.17254902, b: 0.7803922, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -448,6 +448,10 @@ PrefabInstance:
     - target: {fileID: 729614802440255951, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: WildHammers.UI.VictoryPanel, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 729614802448296872, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
+      propertyPath: debug
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 729614802448296873, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
       propertyPath: m_Pivot.x
@@ -1184,6 +1188,22 @@ PrefabInstance:
     - target: {fileID: 3555365888640642252, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3557867730261247478, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3557867730261247478, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3557867730261247478, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3557867730261247478, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: WildHammers.UI.StartMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3609517451671574392, guid: c9c937e7cbc2cc5498674b31e0bc5402, type: 3}
       propertyPath: m_AnchorMax.x
