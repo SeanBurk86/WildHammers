@@ -99,19 +99,19 @@ namespace WildHammers
                 private void SetupJoinPlayerInputPanel(PlayerInput _playerInput)
                 {
                     playerJoinMenu.transform.GetChild(_playerInput.playerIndex).gameObject.SetActive(false);
-
+                    MultiplayerEventSystem _eventSystem = _playerInput.transform.GetComponent<MultiplayerEventSystem>();
                     float _joinPanelwidth = .25f;
                     if (_playerInput.transform.GetComponentInChildren<JoinPanelUI>() != null)
                     {
-                        InitialJoinPanelSetup(_playerInput, _joinPanelwidth);
+                        InitialJoinPanelSetup(_playerInput, _eventSystem, _joinPanelwidth);
                     }
                     else
                     {
-                        ReturningJoinPanelSetup(_playerInput);
+                        ReturningJoinPanelSetup(_playerInput, _eventSystem);
                     }
                 }
 
-                private void ReturningJoinPanelSetup(PlayerInput _playerInput)
+                private void ReturningJoinPanelSetup(PlayerInput _playerInput, MultiplayerEventSystem _eventSystem)
                 {
                     GameObject _joinPlayerUIGameObject = transform.GetChild(_playerInput.playerIndex + 7).gameObject;
                     _joinPlayerUIGameObject.SetActive(true);
@@ -120,13 +120,12 @@ namespace WildHammers
                     _joinPlayerUIGameObject.transform.GetChild(1).GetChild(2).gameObject.SetActive(false);
                     _joinPlayerUIGameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
 
-                    _playerInput.transform.GetComponent<MultiplayerEventSystem>()
-                        .SetSelectedGameObject(null);
-                    _playerInput.transform.GetComponent<MultiplayerEventSystem>()
-                        .SetSelectedGameObject(_joinPanelUI.firstSelectedInitialsButton);
+                    _eventSystem.SetSelectedGameObject(null);
+                    _eventSystem.SetSelectedGameObject(_joinPanelUI.firstSelectedInitialsButton);
+                    
                 }
 
-                private void InitialJoinPanelSetup(PlayerInput _playerInput, float _joinPanelwidth)
+                private void InitialJoinPanelSetup(PlayerInput _playerInput, MultiplayerEventSystem _eventSystem, float _joinPanelwidth)
                 {
                     Transform _joinPlayerUI = _playerInput.transform.GetComponentInChildren<JoinPanelUI>().transform;
                     _joinPlayerUI.SetParent(playerJoinMenu.transform, false);
@@ -137,10 +136,8 @@ namespace WildHammers
                         _joinPlayerUI.GetComponent<RectTransform>().anchorMax = new Vector2(_panelXOffest + _joinPanelwidth, 1);
                     }
 
-                    _playerInput.transform.GetComponent<MultiplayerEventSystem>()
-                        .SetSelectedGameObject(null);
-                    _playerInput.transform.GetComponent<MultiplayerEventSystem>()
-                        .SetSelectedGameObject(_joinPlayerUI.GetComponent<JoinPanelUI>().firstSelectedInitialsButton);
+                    _eventSystem.SetSelectedGameObject(null);
+                    _eventSystem.SetSelectedGameObject(_joinPlayerUI.GetComponent<JoinPanelUI>().firstSelectedInitialsButton);
                 }
 
                 #endregion

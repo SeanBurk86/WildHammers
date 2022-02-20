@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityCore.Game;
 using UnityCore.Menu;
@@ -130,15 +131,25 @@ namespace WildHammers
 
                 if (ScreenFlowController.instance.currentPoseType == ScreenPoseType.SplashStart)
                 {
-                    Transform _startMenuPage = PageController.instance.pages[4].transform;
-                    StartMenu _startMenu = _startMenuPage.GetComponentInChildren<StartMenu>();
-                    _startMenu.OnInitialInput(_playerInput);
+                    StartCoroutine( WaitForFirstAnimation(_playerInput));
                 }
 
                 if (PlayerJoinedGame != null)
                 {
                     PlayerJoinedGame(_playerInput);
                 }
+            }
+
+            private IEnumerator WaitForFirstAnimation(PlayerInput _playerInput)
+            {
+                Transform _startMenuPage = PageController.instance.pages[4].transform;
+                StartMenu _startMenu = _startMenuPage.GetComponentInChildren<StartMenu>(true);
+                while (!_startMenu.gameObject.activeInHierarchy)
+                {
+                    Log("Waiting for splash animation to finish");
+                    yield return null;
+                }
+                _startMenu.OnInitialInput(_playerInput);
             }
     
             private void OnPlayerLeft(PlayerInput _playerInput)
