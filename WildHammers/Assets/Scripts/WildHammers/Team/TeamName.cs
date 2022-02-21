@@ -6,10 +6,10 @@ namespace WildHammers
         public enum TeamName
         {
             None,
-            PENGUINS,
-            PYTHONS,
-            TIGRETTES,
-            OTTERS
+            NINGENS,
+            DEVILS,
+            UNICORNS,
+            DINGBATS
         }
     }
 }

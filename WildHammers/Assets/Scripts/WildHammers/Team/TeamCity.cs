@@ -6,10 +6,10 @@ namespace WildHammers
         public enum TeamCity
         {
             None,
-            HALIFAX,
-            SAVANNAH,
-            DENISON,
-            SWANSEA
+            FROSTWICK,
+            ATORIA,
+            MARLET,
+            ELDERPEAK
         }
     }
 }
