@@ -41,9 +41,7 @@ namespace WildHammers
 
             public void SetMaxPlayers(int _maxPlayers)
             {
-                PlayerJoinController.instance.maxPlayerCount = _maxPlayers;
-                if(_maxPlayers == 4) ScreenFlowController.instance.Flow(ScreenPoseType.FourPlayerJoin);
-                else ScreenFlowController.instance.Flow(ScreenPoseType.TwoPlayerJoin);
+                PlayerJoinController.instance.SetMaxPlayers(_maxPlayers);
             }
             
             public void QuitGame()

@@ -1,6 +1,7 @@
 
 using System;
 using UnityEngine;
+using WildHammers.UI;
 
 namespace WildHammers
 {
@@ -11,6 +12,7 @@ namespace WildHammers
             public string playerInitials { get; private set; }
             public ZodiacType zodiacSign { get; private set; }
             public Color hammerColor { get; private set; }
+            public JoinPanelUI joinPanelUI;
 
             #region Public Functions
 

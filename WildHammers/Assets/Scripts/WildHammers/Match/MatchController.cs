@@ -149,6 +149,10 @@ namespace WildHammers
                 teamWest = null;
                 teamEast = null;
                 m_MatchInfo = new MatchInfo();
+                player1WestText.text = "PICK A TEAM!";
+                player2WestText.text = "FIND THE BEST FRIEND!";
+                player1EastText.text = "PICK A TEAM!";
+                player2EastText.text = "FIND THE BEST FRIEND";
             }
             
             #endregion
@@ -159,12 +163,14 @@ namespace WildHammers
             {
                 instance = this;
                 m_MatchSettingsPanel.acceptSettingsEvent += AcceptSettings;
+                Log("Subscribing to acceptSettingEvent");
                 DontDestroyOnLoad(gameObject);
             }
 
             private void Dispose()
             {
                 m_MatchSettingsPanel.acceptSettingsEvent -= AcceptSettings;
+                Log("Unsubscribing to acceptSettingEvent");
             }
 
             private void AcceptSettings()

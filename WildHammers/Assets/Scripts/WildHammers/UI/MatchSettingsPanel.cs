@@ -11,7 +11,6 @@ namespace WildHammers
     {
         public class MatchSettingsPanel : MonoBehaviour
         {
-            public static MatchSettingsPanel instance = null;
 
             public delegate void AcceptSettingsDelegate();
 
@@ -20,12 +19,6 @@ namespace WildHammers
             public MatchInfo matchSettings;
 
             [SerializeField] private TMP_Text m_NumberOfBallsInput, m_RoundTimeLimit, m_WinningScoreInput, m_ArenaSelect;
-
-            private void Awake()
-            {
-                if (!instance) instance = this;
-                else Destroy(this);
-            }
 
             public void AcceptSettings()
             {

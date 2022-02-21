@@ -34,10 +34,9 @@ namespace WildHammers
 
                 private void OnEnable()
                 {
-                    PlayerJoinController.instance.PlayerJoinedGame += PlayerJoinedGame;
                     foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
                     {
-                        SetupJoinPlayerInputPanel(_playerInput);
+                        if(_playerInput.inputIsActive) SetupJoinPlayerInputPanel(_playerInput);
                     }
                 }
 
@@ -50,7 +49,7 @@ namespace WildHammers
                     }
                 }
 
-                private void OnDisable()
+                private void OnDestroy()
                 {
                     PlayerJoinController.instance.PlayerJoinedGame -= PlayerJoinedGame;
                 }
@@ -78,7 +77,7 @@ namespace WildHammers
                 PlayerJoinController.instance.ResetJoinPanel();
                 foreach (PlayerInput _playerInput in PlayerJoinController.instance.playerList)
                 {
-                    SetupJoinPlayerInputPanel(_playerInput);
+                    if(_playerInput.inputIsActive) SetupJoinPlayerInputPanel(_playerInput);
                 }
             }
 
@@ -89,6 +88,7 @@ namespace WildHammers
                 private void Configure()
                 {
                     instance = this;
+                    PlayerJoinController.instance.PlayerJoinedGame += PlayerJoinedGame;
                 }
 
                 private void PlayerJoinedGame(PlayerInput _playerInput)

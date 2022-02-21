@@ -1308,11 +1308,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1749488848270389097, guid: 6843b925b4217d647b206074f046920b, type: 3}
       propertyPath: debug
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1749488848270389098, guid: 6843b925b4217d647b206074f046920b, type: 3}
       propertyPath: debug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1749488848270389098, guid: 6843b925b4217d647b206074f046920b, type: 3}
       propertyPath: roundTimer

@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityCore.Game;
 using UnityCore.Menu;
 using UnityEngine;
@@ -56,13 +57,6 @@ namespace WildHammers
                 {
                     if (!MatchController.instance.hasMatchStarted)
                     {
-                        if (maxPlayerCount == 2)
-                        {
-                            if (playerList.Find(x => x.playerIndex == 3))
-                                UnregisterPlayer(playerList.Find(x => x.playerIndex == 3));
-                            if (playerList.Find(x => x.playerIndex == 4)) 
-                                UnregisterPlayer(playerList.Find(x => x.playerIndex == 4));
-                        }
                         if (readyCount >= maxPlayerCount && !areAllPlayersEntered)
                         {
                             areAllPlayersEntered = true;
@@ -105,9 +99,56 @@ namespace WildHammers
                 }
             }
 
+            public void SetMaxPlayers(int _maxPlayers)
+            {
+                maxPlayerCount = _maxPlayers;
+                if (_maxPlayers == 4)
+                {
+                    ActivateLastTwoPlayers();
+                    ScreenFlowController.instance.Flow(ScreenPoseType.FourPlayerJoin);
+                }
+                else
+                {
+                    DeactivateLastTwoPlayers();
+                    ScreenFlowController.instance.Flow(ScreenPoseType.TwoPlayerJoin);
+                }
+            }
+
+
             #endregion
 
             #region Private Functions
+            private void DeactivateLastTwoPlayers()
+            {
+                if (playerList.Find(x => x.playerIndex == 2))
+                {
+                    PlayerInput _playerInput = playerList.Find(x => x.playerIndex == 2);
+                    _playerInput.gameObject.GetComponent<PlayerInfo>().joinPanelUI.gameObject.SetActive(false);
+                    _playerInput.DeactivateInput();
+                } 
+                if (playerList.Find(x => x.playerIndex == 3)) 
+                {
+                    PlayerInput _playerInput = playerList.Find(x => x.playerIndex == 3);
+                    _playerInput.gameObject.GetComponent<PlayerInfo>().joinPanelUI.gameObject.SetActive(false);
+                    _playerInput.DeactivateInput();
+                }
+            }
+
+            private void ActivateLastTwoPlayers()
+            {
+                if (playerList.Find(x => x.playerIndex == 2)) 
+                {
+                    PlayerInput _playerInput = playerList.Find(x => x.playerIndex == 2);
+                    _playerInput.gameObject.GetComponent<PlayerInfo>().joinPanelUI.gameObject.SetActive(true);
+                    _playerInput.ActivateInput();
+                }
+                if (playerList.Find(x => x.playerIndex == 3)) 
+                {
+                    PlayerInput _playerInput = playerList.Find(x => x.playerIndex == 3);
+                    _playerInput.gameObject.GetComponent<PlayerInfo>().joinPanelUI.gameObject.SetActive(true);
+                    _playerInput.ActivateInput();
+                }
+            }
 
             public void Configure()
             {
@@ -146,7 +187,6 @@ namespace WildHammers
                 StartMenu _startMenu = _startMenuPage.GetComponentInChildren<StartMenu>(true);
                 while (!_startMenu.gameObject.activeInHierarchy)
                 {
-                    Log("Waiting for splash animation to finish");
                     yield return null;
                 }
                 _startMenu.OnInitialInput(_playerInput);
@@ -161,12 +201,11 @@ namespace WildHammers
             {
                 if (playerList.Count < maxPlayerCount)
                 {
-                    var device = context.control.device;
-                    if (PlayerInput.FindFirstPairedToDevice(device) != null)
+                    var _device = context.control.device;
+                    if (PlayerInput.FindFirstPairedToDevice(_device) != null)
                         return;
 
-                    Log("Joining player with index: "+playerList.Count);
-                    PlayerInputManager.instance.JoinPlayer(playerIndex: playerList.Count, pairWithDevice: device);
+                    PlayerInputManager.instance.JoinPlayer(playerIndex: playerList.Count, pairWithDevice: _device);
                 }
             }
     
@@ -188,16 +227,17 @@ namespace WildHammers
                 }
             }
     
-            private void UnregisterPlayer(PlayerInput playerInput)
+            private void UnregisterPlayer(PlayerInput _playerInput)
             {
-                playerList.Remove(playerInput);
+                playerList.Remove(_playerInput);
 
                 if (PlayerLeftGame != null)
                 {
-                    PlayerLeftGame(playerInput);
+                    PlayerLeftGame(_playerInput);
                 }
         
-                Destroy(playerInput.transform.parent.gameObject);
+                Destroy(_playerInput.transform.parent.gameObject);
+                
             }
 
             private void Log(string _msg)

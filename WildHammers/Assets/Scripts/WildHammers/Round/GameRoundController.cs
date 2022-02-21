@@ -166,15 +166,18 @@ namespace WildHammers
             {
                 foreach (PlayerInput _playerInput in m_PlayerInputs)
                 {
-                    GameObject _playerHammer = _playerInput.transform.GetComponentInChildren<HammerController>(true).gameObject;
-                    PlayerInfo _playerInfo = _playerInput.transform.GetComponent<PlayerInfo>();
-                    SpriteRenderer[] _hammerSprites = _playerHammer.GetComponentsInChildren<SpriteRenderer>();
-                    foreach (SpriteRenderer _spriteRenderer in _hammerSprites)
+                    if (_playerInput.inputIsActive)
                     {
-                        _spriteRenderer.color = _playerInfo.hammerColor;
+                        GameObject _playerHammer = _playerInput.transform.GetComponentInChildren<HammerController>(true).gameObject;
+                        PlayerInfo _playerInfo = _playerInput.transform.GetComponent<PlayerInfo>();
+                        SpriteRenderer[] _hammerSprites = _playerHammer.GetComponentsInChildren<SpriteRenderer>();
+                        foreach (SpriteRenderer _spriteRenderer in _hammerSprites)
+                        {
+                            _spriteRenderer.color = _playerInfo.hammerColor;
+                        }
+                        _playerHammer.GetComponent<HammerController>().headTMPText.text = _playerInfo.playerInitials;
+                        _playerHammer.SetActive(true);
                     }
-                    _playerHammer.GetComponent<HammerController>().headTMPText.text = _playerInfo.playerInitials;
-                    _playerHammer.SetActive(true);
                 }
             }
 
