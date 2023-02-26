@@ -20,6 +20,7 @@ namespace UnityCore
             private static readonly string MATCHES_LOST_SUFFIX = "_matches_lost";
             private static readonly string MATCHES_DRAWN_SUFFIX = "_matches_drawn";
             private static readonly string MATCH_MUSIC = "matchmusic";
+            private static readonly string VICTORY_MUSIC = "victorymusic";
             private static readonly int DEFAULT_INT = 0;
 
             #region Properties
@@ -70,6 +71,18 @@ namespace UnityCore
                 set
                 {
                     SaveInt(MATCH_MUSIC, value);
+                }
+            }
+
+            public string VictoryMusic
+            {
+                get
+                {
+                    return GetString(VICTORY_MUSIC);
+                }
+                set
+                {
+                    SaveString(VICTORY_MUSIC, value);
                 }
             }
 
@@ -159,6 +172,16 @@ namespace UnityCore
             private int GetInt(string _data)
             {
                 return PlayerPrefs.GetInt(_data, DEFAULT_INT);
+            }
+
+            private void SaveString(string _data, string _value)
+            {
+                PlayerPrefs.SetString(_data, _value);
+            }
+
+            private string GetString(string _data)
+            {
+                return PlayerPrefs.GetString(_data);
             }
 
             private void Configure()

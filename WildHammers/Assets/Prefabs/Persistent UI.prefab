@@ -3349,7 +3349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamList: []
   teamButtonPrefab: {fileID: 6238475652586081780, guid: 780e1b8f451a64047b035223454a02e4, type: 3}
-  playerList: []
+  eventSystemList: []
   buttonPanel: {fileID: 729614803666248207}
 --- !u!114 &729614803571227852
 MonoBehaviour:
@@ -20397,7 +20397,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4287102817
-  m_fontColor: {r: 0.3803922, g: 1, b: 0.5294118, a: 1}
+  m_fontColor: {r: 0.11091134, g: 0.8773585, b: 0.8543505, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
